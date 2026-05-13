@@ -1,0 +1,12 @@
+export { Navbar } from "./Navbar";
+export { Hero } from "./Hero";
+export { PainSolution } from "./PainSolution";
+export { Benefits } from "./Benefits";
+export { HowItWorks } from "./HowItWorks";
+export { UseCases } from "./UseCases";
+export { Security } from "./Security";
+export { Compare } from "./Compare";
+export { SocialProof } from "./SocialProof";
+export { FAQ } from "./FAQ";
+export { ContactForm } from "./ContactForm";
+export { Footer } from "./Footer";
