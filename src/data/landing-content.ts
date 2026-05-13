@@ -29,9 +29,21 @@ export const navLinks = [
 ] as const;
 
 export const heroHighlights = [
-  { icon: ShieldCheck, label: "Conformidade LGPD" },
-  { icon: Server, label: "Execução on-premise" },
-  { icon: Lock, label: "Dados criptografados" },
+  {
+    icon: ShieldCheck,
+    label: "Conformidade LGPD",
+    description: "Privacidade e conformidade garantidas.",
+  },
+  {
+    icon: Server,
+    label: "Execução on-premise",
+    description: "IA executada no seu ambiente interno.",
+  },
+  {
+    icon: Lock,
+    label: "Dados criptografados",
+    description: "Proteção de ponta a ponta em todos os documentos.",
+  },
 ] as const;
 
 export const painSolutionItems = [
@@ -66,8 +78,9 @@ export const benefits = [
   },
   {
     icon: FileSearch,
-    title: "Análise inteligente de documentos",
-    description: "PDFs, contratos, planilhas, laudos e e-mails com extração e síntese em segundos.",
+    title: "Modos especializados de análise",
+    description:
+      "Use análises jurídica, financeira, OCR, imagens e dados para respostas mais precisas por contexto.",
   },
   {
     icon: Zap,
@@ -95,12 +108,12 @@ export const howItWorksSteps = [
   {
     icon: FolderOpen,
     title: "2. Selecione coleção e tarefa",
-    description: "Organize por área e escolha o tipo de análise desejada.",
+    description: "Organize por área, acervo e nível de acesso antes de iniciar a análise.",
   },
   {
     icon: Sparkles,
     title: "3. Análise com IA privada",
-    description: "A NativIA processa internamente, sem expor dados a terceiros.",
+    description: "A NativIA executa internamente no modo ideal para o tipo de documento e objetivo.",
   },
   {
     icon: MessageSquare,
@@ -200,7 +213,7 @@ export const compareRows = [
 
 export const socialMetrics = [
   { value: "+60%", label: "Redução em tempo de leitura documental" },
-  { value: "100%", label: "Dos dados permanecem na infraestrutura da empresa" },
+  { value: "100%", label: "dos dados permanecem na infraestrutura da empresa" },
   { value: "4x", label: "Mais respostas atendidas pelo time" },
   { value: "<30 dias", label: "Tempo médio de implantação" },
 ] as const;

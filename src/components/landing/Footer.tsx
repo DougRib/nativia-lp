@@ -1,16 +1,17 @@
-import { Mail, MapPin, Phone, Shield } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { navLinks } from "@/data/landing-content";
 
 export function Footer() {
   return (
     <footer className="border-t border-border bg-card/40">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6 sm:py-16 md:grid-cols-4 md:gap-10">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6 sm:py-16 md:grid-cols-4 md:gap-10 lg:px-8">
         <div>
           <div className="mb-4 flex items-center gap-2 text-lg font-bold">
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-primary">
-              <Shield className="h-4 w-4 text-primary-foreground" />
-            </span>
-            <span className="text-gradient">NativIA</span>
+            <img
+              src="src/assets/nativia-logo1.png"
+              alt="Logo NativIA"
+              width={150}
+            />
           </div>
           <p className="text-sm text-muted-foreground">
             IA corporativa privada com execução on-premise.
@@ -39,7 +40,10 @@ export function Footer() {
               </a>
             </li>
             <li>
-              <a href="/politica-de-privacidade" className="hover:text-foreground">
+              <a
+                href="/politica-de-privacidade"
+                className="hover:text-foreground"
+              >
                 Política de Privacidade
               </a>
             </li>
@@ -61,7 +65,10 @@ export function Footer() {
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li className="flex items-center gap-2">
               <Mail className="h-4 w-4" />
-              <a href="mailto:contato@nativia.com.br" className="hover:text-foreground">
+              <a
+                href="mailto:contato@nativia.com.br"
+                className="break-all hover:text-foreground sm:break-normal"
+              >
                 contato@nativia.com.br
               </a>
             </li>

@@ -8,26 +8,32 @@ import { cn } from "@/lib/cn";
 
 type RevealSectionProps = ComponentPropsWithoutRef<"section">;
 
+function shouldRenderVisible() {
+  if (typeof window === "undefined") {
+    return true;
+  }
+
+  return (
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    typeof window.IntersectionObserver === "undefined"
+  );
+}
+
 export function RevealSection({
   className,
   children,
   ...props
 }: RevealSectionProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(shouldRenderVisible);
 
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const shouldReduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (shouldReduceMotion || typeof IntersectionObserver === "undefined") {
-      setIsVisible(true);
+    if (isVisible) {
       return;
     }
+
+    const section = sectionRef.current;
+    if (!section) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -45,7 +51,7 @@ export function RevealSection({
 
     observer.observe(section);
     return () => observer.disconnect();
-  }, []);
+  }, [isVisible]);
 
   return (
     <section

@@ -12,7 +12,7 @@ export function Compare() {
         </div>
 
         <div className="overflow-x-auto rounded-2xl border border-border bg-card">
-          <table className="w-full min-w-[520px] text-sm">
+          <table className="w-full min-w-[520px] text-xs sm:text-sm">
             <thead>
               <tr className="border-b border-border bg-background/40">
                 <th className="p-3 text-left font-semibold sm:p-4">Critério</th>
