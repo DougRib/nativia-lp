@@ -9,12 +9,15 @@ export function Benefits() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center sm:mb-16">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-primary">Benefícios</p>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-primary">
+            Benefícios
+          </p>
           <h2 className="mb-4 text-2xl font-bold sm:text-3xl md:text-5xl">
             Construída para a realidade corporativa
           </h2>
           <p className="mx-auto max-w-2xl text-muted-foreground">
-            Tudo o que TI, jurídico e gestão precisam para adotar IA com segurança.
+            Tudo o que TI, jurídico e gestão precisam para adotar IA com
+            segurança.
           </p>
         </div>
 
@@ -27,8 +30,12 @@ export function Benefits() {
               <div className="mb-5 grid h-12 w-12 place-items-center rounded-xl bg-gradient-primary shadow-glow transition-transform group-hover:scale-110">
                 <item.icon className="h-6 w-6 text-primary-foreground" />
               </div>
-              <h3 className="mb-2 text-base font-semibold sm:text-lg">{item.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+              <h3 className="mb-2 text-base font-semibold sm:text-lg">
+                {item.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {item.description}
+              </p>
             </article>
           ))}
         </div>

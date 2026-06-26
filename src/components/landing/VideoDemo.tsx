@@ -13,8 +13,12 @@ export function VideoDemo() {
           <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-primary">
             {videoDemo.eyebrow}
           </p>
-          <h2 className="mb-4 text-2xl font-bold sm:text-3xl md:text-5xl">{videoDemo.title}</h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">{videoDemo.description}</p>
+          <h2 className="mb-4 text-2xl font-bold sm:text-3xl md:text-5xl">
+            {videoDemo.title}
+          </h2>
+          <p className="mx-auto max-w-2xl text-muted-foreground">
+            {videoDemo.description}
+          </p>
         </div>
 
         <div className="relative mx-auto max-w-5xl">

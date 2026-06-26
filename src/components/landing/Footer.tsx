@@ -2,7 +2,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { navLinks } from "@/data/landing-content";
 // Import via Vite garante hash de cache + resolução correta no build de produção.
 // O bug anterior usava uma string literal "src/assets/..." que não passa pelo bundler.
-import logo from "@/assets/nativia-logo1.png";
+import logo from "@/assets/nativia-logo1.webp";
 
 export function Footer() {
   return (

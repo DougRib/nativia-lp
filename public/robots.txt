@@ -1,0 +1,13 @@
+# NativIA — política para crawlers de busca.
+# Permite indexação completa da landing e páginas institucionais,
+# bloqueia apenas paths sensíveis caso existam no futuro.
+
+User-agent: *
+Allow: /
+
+# Páginas que não devem ser indexadas (caso venham a existir):
+# Disallow: /admin/
+# Disallow: /api/
+
+# Localização do sitemap para descoberta de URLs.
+Sitemap: https://nativia-lp.vercel.app/sitemap.xml

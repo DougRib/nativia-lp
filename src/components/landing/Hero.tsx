@@ -1,7 +1,9 @@
 import { ArrowRight } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { heroHighlights } from "@/data/landing-content";
-import heroImg from "@/assets/hero.png";
+// WebP gerado via scripts/convert-images.mjs — reduziu 93% do tamanho do PNG
+// original (1.83 MB → 132 KB), com qualidade visual indistinguível para o hero.
+import heroImg from "@/assets/hero.webp";
 
 export function Hero() {
   return (
@@ -33,7 +35,9 @@ export function Hero() {
             */}
             <div className="hero-badge mb-6 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs text-muted-foreground">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary shadow-[0_0_8px_oklch(0.78_0.16_200/0.8)]" />
-              <span className="font-medium tracking-wide">IA privada · On-premise · LGPD</span>
+              <span className="font-medium tracking-wide">
+                IA privada · On-premise · LGPD
+              </span>
             </div>
 
             <h1 className="mb-5 text-3xl font-bold leading-[1.08] sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl">
@@ -44,8 +48,9 @@ export function Hero() {
 
             <p className="mx-auto mb-7 max-w-xl text-base text-muted-foreground sm:mb-8 sm:text-lg lg:mx-0">
               NativIA é uma plataforma de inteligência artificial privada que
-              processa documentos e gera insights dentro do seu próprio ambiente.
-              Segurança, governança e produtividade sem vazamento de informação.
+              processa documentos e gera insights dentro do seu próprio
+              ambiente. Segurança, governança e produtividade sem vazamento de
+              informação.
             </p>
 
             {/*
@@ -125,7 +130,9 @@ export function Hero() {
                     <highlight.icon className="h-4 w-4" />
                   </div>
                   <div className="text-left">
-                    <p className="text-sm font-semibold text-foreground">{highlight.label}</p>
+                    <p className="text-sm font-semibold text-foreground">
+                      {highlight.label}
+                    </p>
                     <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                       {highlight.description}
                     </p>

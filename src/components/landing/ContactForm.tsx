@@ -13,7 +13,13 @@ type FormStatus = "idle" | "loading" | "success" | "error";
 
 // Nomes dos campos do formulário — usar tipo derivado garante consistência
 // entre o markup, os erros e o schema Zod (evita typos silenciosos).
-type FieldName = "nome" | "empresa" | "cargo" | "email" | "telefone" | "mensagem";
+type FieldName =
+  | "nome"
+  | "empresa"
+  | "cargo"
+  | "email"
+  | "telefone"
+  | "mensagem";
 type FieldErrors = Partial<Record<FieldName, string>>;
 
 export function ContactForm() {
@@ -53,11 +59,17 @@ export function ContactForm() {
       setFieldErrors({});
       await submitContactLead(validation.data);
       setStatus("success");
-      setFeedback("Solicitação enviada. Nosso time entrará em contato em até 1 dia útil.");
+      setFeedback(
+        "Solicitação enviada. Nosso time entrará em contato em até 1 dia útil.",
+      );
       form.reset();
     } catch (error) {
       setStatus("error");
-      setFeedback(error instanceof Error ? error.message : "Não foi possível enviar agora.");
+      setFeedback(
+        error instanceof Error
+          ? error.message
+          : "Não foi possível enviar agora.",
+      );
     }
   }
 
@@ -66,7 +78,10 @@ export function ContactForm() {
   const errorId = (field: FieldName) => `${field}-error`;
 
   return (
-    <RevealSection id="contato" className="relative overflow-hidden border-t border-border py-16 sm:py-24">
+    <RevealSection
+      id="contato"
+      className="relative overflow-hidden border-t border-border py-16 sm:py-24"
+    >
       <div className="absolute inset-0 grid-bg opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
 
       <div className="relative mx-auto grid max-w-5xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
@@ -76,13 +91,15 @@ export function ContactForm() {
           retoma o alinhamento à esquerda.
         */}
         <div className="text-center lg:text-left">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-primary">Demonstração</p>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-primary">
+            Demonstração
+          </p>
           <h2 className="mb-5 text-2xl font-bold sm:text-3xl md:text-5xl">
             Veja a NativIA aplicada à sua operação
           </h2>
           <p className="mx-auto mb-6 max-w-xl text-base text-muted-foreground sm:text-lg lg:mx-0">
-            Em até 45 minutos mostramos como sua empresa pode usar IA privada com segurança total
-            e ROI mensurável.
+            Em até 45 minutos mostramos como sua empresa pode usar IA privada
+            com segurança total e ROI mensurável.
           </p>
 
           {/*
@@ -93,7 +110,10 @@ export function ContactForm() {
           <ul className="mx-auto inline-block space-y-3 text-left text-sm lg:mx-0 lg:block">
             {contactSessionHighlights.map((item) => (
               <li key={item} className="flex gap-2">
-                <CheckCircle2 className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+                <CheckCircle2
+                  className="h-5 w-5 shrink-0 text-primary"
+                  aria-hidden="true"
+                />
                 {item}
               </li>
             ))}
@@ -110,7 +130,10 @@ export function ContactForm() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <Label htmlFor="nome">
-                  Nome <span className="text-destructive" aria-hidden="true">*</span>
+                  Nome{" "}
+                  <span className="text-destructive" aria-hidden="true">
+                    *
+                  </span>
                 </Label>
                 <Input
                   id="nome"
@@ -120,17 +143,25 @@ export function ContactForm() {
                   autoComplete="name"
                   className="mt-1.5 bg-background"
                   aria-invalid={Boolean(fieldErrors.nome)}
-                  aria-describedby={fieldErrors.nome ? errorId("nome") : undefined}
+                  aria-describedby={
+                    fieldErrors.nome ? errorId("nome") : undefined
+                  }
                 />
                 {fieldErrors.nome && (
-                  <p id={errorId("nome")} className="mt-1 text-xs text-destructive">
+                  <p
+                    id={errorId("nome")}
+                    className="mt-1 text-xs text-destructive"
+                  >
                     {fieldErrors.nome}
                   </p>
                 )}
               </div>
               <div>
                 <Label htmlFor="empresa">
-                  Empresa <span className="text-destructive" aria-hidden="true">*</span>
+                  Empresa{" "}
+                  <span className="text-destructive" aria-hidden="true">
+                    *
+                  </span>
                 </Label>
                 <Input
                   id="empresa"
@@ -140,10 +171,15 @@ export function ContactForm() {
                   autoComplete="organization"
                   className="mt-1.5 bg-background"
                   aria-invalid={Boolean(fieldErrors.empresa)}
-                  aria-describedby={fieldErrors.empresa ? errorId("empresa") : undefined}
+                  aria-describedby={
+                    fieldErrors.empresa ? errorId("empresa") : undefined
+                  }
                 />
                 {fieldErrors.empresa && (
-                  <p id={errorId("empresa")} className="mt-1 text-xs text-destructive">
+                  <p
+                    id={errorId("empresa")}
+                    className="mt-1 text-xs text-destructive"
+                  >
                     {fieldErrors.empresa}
                   </p>
                 )}
@@ -153,7 +189,10 @@ export function ContactForm() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <Label htmlFor="cargo">
-                  Cargo <span className="text-destructive" aria-hidden="true">*</span>
+                  Cargo{" "}
+                  <span className="text-destructive" aria-hidden="true">
+                    *
+                  </span>
                 </Label>
                 <Input
                   id="cargo"
@@ -163,17 +202,25 @@ export function ContactForm() {
                   autoComplete="organization-title"
                   className="mt-1.5 bg-background"
                   aria-invalid={Boolean(fieldErrors.cargo)}
-                  aria-describedby={fieldErrors.cargo ? errorId("cargo") : undefined}
+                  aria-describedby={
+                    fieldErrors.cargo ? errorId("cargo") : undefined
+                  }
                 />
                 {fieldErrors.cargo && (
-                  <p id={errorId("cargo")} className="mt-1 text-xs text-destructive">
+                  <p
+                    id={errorId("cargo")}
+                    className="mt-1 text-xs text-destructive"
+                  >
                     {fieldErrors.cargo}
                   </p>
                 )}
               </div>
               <div>
                 <Label htmlFor="telefone">
-                  Telefone <span className="text-destructive" aria-hidden="true">*</span>
+                  Telefone{" "}
+                  <span className="text-destructive" aria-hidden="true">
+                    *
+                  </span>
                 </Label>
                 <Input
                   id="telefone"
@@ -188,10 +235,15 @@ export function ContactForm() {
                   placeholder="(11) 99999-9999"
                   className="mt-1.5 bg-background"
                   aria-invalid={Boolean(fieldErrors.telefone)}
-                  aria-describedby={fieldErrors.telefone ? errorId("telefone") : undefined}
+                  aria-describedby={
+                    fieldErrors.telefone ? errorId("telefone") : undefined
+                  }
                 />
                 {fieldErrors.telefone && (
-                  <p id={errorId("telefone")} className="mt-1 text-xs text-destructive">
+                  <p
+                    id={errorId("telefone")}
+                    className="mt-1 text-xs text-destructive"
+                  >
                     {fieldErrors.telefone}
                   </p>
                 )}
@@ -200,7 +252,10 @@ export function ContactForm() {
 
             <div>
               <Label htmlFor="email">
-                E-mail corporativo <span className="text-destructive" aria-hidden="true">*</span>
+                E-mail corporativo{" "}
+                <span className="text-destructive" aria-hidden="true">
+                  *
+                </span>
               </Label>
               <Input
                 id="email"
@@ -213,10 +268,15 @@ export function ContactForm() {
                 placeholder="voce@suaempresa.com.br"
                 className="mt-1.5 bg-background"
                 aria-invalid={Boolean(fieldErrors.email)}
-                aria-describedby={fieldErrors.email ? errorId("email") : undefined}
+                aria-describedby={
+                  fieldErrors.email ? errorId("email") : undefined
+                }
               />
               {fieldErrors.email && (
-                <p id={errorId("email")} className="mt-1 text-xs text-destructive">
+                <p
+                  id={errorId("email")}
+                  className="mt-1 text-xs text-destructive"
+                >
                   {fieldErrors.email}
                 </p>
               )}
@@ -231,10 +291,15 @@ export function ContactForm() {
                 rows={4}
                 className="mt-1.5 bg-background"
                 aria-invalid={Boolean(fieldErrors.mensagem)}
-                aria-describedby={fieldErrors.mensagem ? errorId("mensagem") : undefined}
+                aria-describedby={
+                  fieldErrors.mensagem ? errorId("mensagem") : undefined
+                }
               />
               {fieldErrors.mensagem && (
-                <p id={errorId("mensagem")} className="mt-1 text-xs text-destructive">
+                <p
+                  id={errorId("mensagem")}
+                  className="mt-1 text-xs text-destructive"
+                >
                   {fieldErrors.mensagem}
                 </p>
               )}
@@ -242,7 +307,11 @@ export function ContactForm() {
 
             {feedback && (
               <p
-                className={status === "success" ? "text-sm text-primary" : "text-sm text-destructive"}
+                className={
+                  status === "success"
+                    ? "text-sm text-primary"
+                    : "text-sm text-destructive"
+                }
                 // role="alert" anuncia imediatamente para leitores de tela;
                 // role="status" é usado em mensagens não-urgentes (sucesso).
                 role={status === "error" ? "alert" : "status"}
@@ -252,14 +321,26 @@ export function ContactForm() {
               </p>
             )}
 
-            <Button type="submit" size="lg" fullWidth disabled={status === "loading"}>
-              {status === "loading" ? "Enviando..." : "Quero uma demonstração da NativIA"}
-              {status !== "loading" && <ArrowRight className="h-4 w-4" aria-hidden="true" />}
+            <Button
+              type="submit"
+              size="lg"
+              fullWidth
+              disabled={status === "loading"}
+            >
+              {status === "loading"
+                ? "Enviando..."
+                : "Quero uma demonstração da NativIA"}
+              {status !== "loading" && (
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              )}
             </Button>
 
             <p className="text-center text-xs text-muted-foreground">
               Ao enviar, você concorda com nossa{" "}
-              <a href="/politica-de-privacidade" className="underline hover:text-foreground">
+              <a
+                href="/politica-de-privacidade"
+                className="underline hover:text-foreground"
+              >
                 política de privacidade
               </a>
               .

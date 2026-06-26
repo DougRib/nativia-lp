@@ -5,22 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!--
-      Favicon servido a partir de /public — o Vite copia arquivos de /public
-      para a raiz do build, então caminhos absolutos como "/favicon.svg" funcionam
-      tanto em dev quanto em produção. Evita o bug anterior em que "src/assets/..."
-      retornava 404 após o `vite build`.
+      Favicons gerados a partir de src/assets/nativia-icon.png pelo script
+      `npm run generate-favicon` (saída em /public).
+
+      Estratégia de múltiplas declarações:
+        - favicon-32.png: aba do browser desktop (16/32 px renderizam crispy).
+        - apple-touch-icon: Safari iOS / iPadOS quando o usuário adiciona à
+          tela inicial. 180×180 é o tamanho que a Apple usa internamente.
+        - android-chrome-*: ícones para Chrome Android home screen e PWA;
+          o browser escolhe o tamanho mais próximo do device pixel ratio.
+
+      O browser sempre escolhe o melhor candidato — declarar múltiplos
+      tamanhos é o jeito moderno (em vez de um único favicon.ico).
     -->
-    <link rel="icon" type="image/svg+xml" href="/src/assets/nativia-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/android-chrome-192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="/android-chrome-512.png"
+    />
 
     <!-- URL canônica: evita duplicidade em buscadores quando a página é acessada por variações de domínio. -->
     <link rel="canonical" href="https://nativia-lp.vercel.app/" />
 
     <!--
+      Content Security Policy via <meta> — defesa em profundidade para o caso
+      do site ser hospedado sem cabeçalhos HTTP (ex.: preview local).
+
+      Diretivas omitidas aqui porque a spec ignora quando via meta tag:
+        - frame-ancestors: precisa ser HTTP header. Aplicada no vercel.json.
+        - report-to / report-uri: idem.
+
+      'unsafe-inline' em script-src/style-src é necessário pelo JSON-LD inline
+      (script) e pela injeção do Tailwind no dev (style). Em refatoração futura,
+      migrar para nonces elimina ambos.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com data:;
+        img-src 'self' data: https://nativia-lp.vercel.app;
+        connect-src 'self';
+        base-uri 'self';
+        form-action 'self';
+        object-src 'none';
+        upgrade-insecure-requests;"
+    />
+
+    <!-- Anti-clickjacking adicional (Permissions-Policy/Referrer também ajudam). -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!--
       Preconnect às origens das fontes do Google: abre o handshake TCP/TLS
-      antecipadamente, reduzindo o tempo até as fontes estarem disponíveis (LCP).
+      antecipadamente. Adicionamos também `preload` da própria stylesheet
+      como `style` para garantir prioridade alta no carregamento da fonte.
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
@@ -41,13 +97,16 @@
       property="og:description"
       content="Análise de documentos com IA privada e segura dentro da sua infraestrutura."
     />
-    <!--
-      TODO: Gerar uma imagem 1200x630 em /public/og-image.jpg para preview de compartilhamento.
-      Enquanto não existe, mantém-se o fallback automático do Vercel.
-    -->
-    <meta property="og:image" content="https://nativia-lp.vercel.app/og-image.jpg" />
+    <meta
+      property="og:image"
+      content="https://nativia-lp.vercel.app/og-image.jpg"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="NativIA — IA corporativa privada on-premise"
+    />
     <meta property="og:locale" content="pt_BR" />
 
     <!-- Twitter / X -->
@@ -57,14 +116,22 @@
       name="twitter:description"
       content="Análise de documentos com IA privada e segura dentro da sua infraestrutura."
     />
-    <meta name="twitter:image" content="https://nativia-lp.vercel.app/og-image.jpg" />
+    <meta
+      name="twitter:image"
+      content="https://nativia-lp.vercel.app/og-image.jpg"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="NativIA — IA corporativa privada on-premise"
+    />
 
     <meta name="theme-color" content="#0a1a2e" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
 
     <!--
-      JSON-LD: dados estruturados que ajudam buscadores e cards corporativos
-      (ex.: LinkedIn) a identificar o produto e a empresa. Usa SoftwareApplication
-      por se tratar de uma plataforma SaaS / on-premise.
+      JSON-LD enriquecido: SoftwareApplication + Organization aninhada,
+      featureList, screenshot, inLanguage. Aumenta probabilidade de aparecer
+      como rich result no Google e ajuda LinkedIn/Notion a montar cards melhores.
     -->
     <script type="application/ld+json">
       {
@@ -72,19 +139,40 @@
         "@type": "SoftwareApplication",
         "name": "NativIA",
         "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Linux, Docker",
-        "description": "Plataforma de IA corporativa privada para análise inteligente de documentos com execução on-premise.",
+        "applicationSubCategory": "Document AI / RAG",
+        "operatingSystem": "Linux, Docker (on-premise)",
+        "description": "Plataforma de IA corporativa privada para análise inteligente de documentos com execução on-premise, segurança e conformidade LGPD.",
         "url": "https://nativia-lp.vercel.app/",
+        "inLanguage": "pt-BR",
+        "screenshot": "https://nativia-lp.vercel.app/og-image.jpg",
+        "featureList": [
+          "RAG híbrido com embeddings semânticos e reranker neural",
+          "LLM local em GPU (Qwen via Ollama)",
+          "Extração determinística para holerites e extratos bancários",
+          "OCR multimodal (Qwen-VL)",
+          "Transcrição de áudio local (Whisper)",
+          "SSO via Keycloak (SAML/OIDC) + LDAP/Active Directory",
+          "Auditoria completa por conversa e usuário",
+          "Conformidade LGPD por design"
+        ],
         "offers": {
           "@type": "Offer",
           "priceCurrency": "BRL",
           "price": "0",
-          "availability": "https://schema.org/InStock"
+          "availability": "https://schema.org/InStock",
+          "url": "https://nativia-lp.vercel.app/#contato"
         },
         "publisher": {
           "@type": "Organization",
           "name": "NativIA",
-          "url": "https://nativia-lp.vercel.app/"
+          "url": "https://nativia-lp.vercel.app/",
+          "logo": "https://nativia-lp.vercel.app/android-chrome-512.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "sales",
+            "email": "contato@nativia.com.br",
+            "availableLanguage": ["pt-BR", "en"]
+          }
         }
       }
     </script>

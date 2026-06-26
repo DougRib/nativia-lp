@@ -10,7 +10,7 @@ import { navLinks as defaultNavLinks } from "@/data/landing-content";
 import { ButtonLink } from "@/components/ui/button";
 import { useActiveSection } from "@/lib/use-active-section";
 import { cn } from "@/lib/cn";
-import logo from "@/assets/nativia-logo1.png";
+import logo from "@/assets/nativia-logo1.webp";
 
 // Tempo (ms) que a classe .nav-link-clicked permanece no link após o clique.
 // Sincronizado com a duração do keyframe `nav-link-ripple` em styles.css.
@@ -61,11 +61,41 @@ export function Navbar({
   rightAction,
 }: NavbarProps) {
   // `open` reflete a intenção do usuário (clicou no hambúrguer ou em "X").
-  // `shouldRender` controla se o drawer está montado — fica `true` durante
-  // a animação de saída para que o conteúdo possa "deslizar" antes de sumir.
   const [open, setOpen] = useState(false);
-  const [shouldRender, setShouldRender] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
+
+  /**
+   * Máquina de estado de 3 valores que controla o ciclo de vida do drawer:
+   *   - "closed":  drawer não está no DOM.
+   *   - "open":    drawer no DOM tocando animação de entrada.
+   *   - "closing": drawer ainda no DOM tocando animação de saída
+   *                (aguardando timer para desmontar).
+   *
+   * Centralizar em UM ÚNICO estado evita o anti-pattern de chamar
+   * setState sincronamente dentro do useEffect (que dispara o warning
+   * "Calling setState synchronously within an effect" do React 19).
+   */
+  const [drawerState, setDrawerState] = useState<"closed" | "open" | "closing">(
+    "closed",
+  );
+
+  // Snapshot do último valor de `open` que o render viu — usado para
+  // detectar transições durante o próprio render (padrão oficial do React:
+  // https://react.dev/reference/react/useState#storing-information-from-previous-renders).
+  const [lastOpenSeen, setLastOpenSeen] = useState(false);
+
+  // Reage à transição open↔fechado DURANTE o render. Isso é seguro porque:
+  //   1. A atualização só dispara quando há mudança real (`open !== lastOpenSeen`).
+  //   2. React descarta o render atual e re-renderiza imediatamente — não
+  //      cria efeito colateral pós-commit.
+  //   3. Converge em ≤2 passes (não vira loop).
+  if (open !== lastOpenSeen) {
+    setLastOpenSeen(open);
+    if (open) {
+      setDrawerState("open");
+    } else if (drawerState === "open") {
+      setDrawerState("closing");
+    }
+  }
 
   // Link recentemente clicado — usado para acionar a animação ripple
   // sem precisar de refs em cada link individual.
@@ -94,33 +124,26 @@ export function Navbar({
   // possa ser reativada em cliques sucessivos no mesmo link.
   useEffect(() => {
     if (!clickedHref) return;
-    const timer = window.setTimeout(() => setClickedHref(null), RIPPLE_DURATION_MS);
+    const timer = window.setTimeout(
+      () => setClickedHref(null),
+      RIPPLE_DURATION_MS,
+    );
     return () => window.clearTimeout(timer);
   }, [clickedHref]);
 
-  // Coordena montagem + animação de entrada/saída do drawer.
-  // - Ao abrir: monta imediatamente e remove `isClosing` para tocar animação de entrada.
-  // - Ao fechar: marca `isClosing=true`, mantém montado por DRAWER_EXIT_DURATION_MS
-  //   para a animação de saída, depois desmonta.
+  // Effect EXCLUSIVO para gerenciar o timer de unmount após o fechamento.
+  // Não chama setState sincronamente — só agenda um setTimeout assíncrono.
   useEffect(() => {
-    if (open) {
-      setShouldRender(true);
-      setIsClosing(false);
-      return;
-    }
-
-    if (!shouldRender) {
-      return;
-    }
-
-    setIsClosing(true);
-    const timer = window.setTimeout(() => {
-      setShouldRender(false);
-      setIsClosing(false);
-    }, DRAWER_EXIT_DURATION_MS);
-
+    if (drawerState !== "closing") return;
+    const timer = window.setTimeout(
+      () => setDrawerState("closed"),
+      DRAWER_EXIT_DURATION_MS,
+    );
     return () => window.clearTimeout(timer);
-  }, [open, shouldRender]);
+  }, [drawerState]);
+
+  const shouldRender = drawerState !== "closed";
+  const isClosing = drawerState === "closing";
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 lg:px-8">

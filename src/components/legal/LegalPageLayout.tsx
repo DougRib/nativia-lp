@@ -46,14 +46,22 @@ export function LegalPageLayout({ document }: LegalPageLayoutProps) {
             {document.lead}
           </p>
           <p className="text-sm text-muted-foreground">
-            Última atualização: <strong className="font-semibold text-foreground">{document.updatedAt}</strong>
+            Última atualização:{" "}
+            <strong className="font-semibold text-foreground">
+              {document.updatedAt}
+            </strong>
           </p>
         </section>
 
         <section className="mx-auto max-w-4xl space-y-4 px-4 pb-10 sm:space-y-4 sm:px-6 sm:pb-14 lg:px-8">
           {document.sections.map((section) => (
-            <article key={section.title} className="rounded-2xl border border-border bg-card/35 p-5 sm:p-7">
-              <h2 className="mb-3 text-xl font-semibold sm:text-2xl">{section.title}</h2>
+            <article
+              key={section.title}
+              className="rounded-2xl border border-border bg-card/35 p-5 sm:p-7"
+            >
+              <h2 className="mb-3 text-xl font-semibold sm:text-2xl">
+                {section.title}
+              </h2>
 
               <div className="space-y-3">
                 {section.paragraphs.map((paragraph, paragraphIndex) => (
@@ -73,7 +81,9 @@ export function LegalPageLayout({ document }: LegalPageLayoutProps) {
                       key={`${section.title}-bullet-${bulletIndex + 1}`}
                       className="flex gap-2 text-sm text-muted-foreground sm:text-base"
                     >
-                      <span className="mt-1 text-primary" aria-hidden="true">•</span>
+                      <span className="mt-1 text-primary" aria-hidden="true">
+                        •
+                      </span>
                       <span>{bulletPoint}</span>
                     </li>
                   ))}
@@ -86,7 +96,9 @@ export function LegalPageLayout({ document }: LegalPageLayoutProps) {
 
       <footer className="border-t border-border bg-card/30">
         <div className="mx-auto flex max-w-7xl items-center justify-center gap-4 px-4 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:px-6 lg:px-8">
-          <p>© {new Date().getFullYear()} NativIA. Todos os direitos reservados.</p>
+          <p>
+            © {new Date().getFullYear()} NativIA. Todos os direitos reservados.
+          </p>
         </div>
       </footer>
     </div>

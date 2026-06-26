@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --format json",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "convert-images": "node scripts/convert-images.mjs",
+    "generate-og": "node scripts/generate-og-image.mjs",
+    "generate-favicon": "node scripts/generate-favicon.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.14.0",
@@ -28,13 +31,14 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
     "postcss": "^8.5.14",
+    "sharp": "^0.35.2",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.3",
     "vite": "^8.0.12"
   },
   "optionalDependencies": {
-    "@rolldown/binding-win32-x64-msvc": "^1.0.0",
-    "@rolldown/binding-win32-arm64-msvc": "^1.0.0"
+    "@rolldown/binding-win32-arm64-msvc": "^1.0.0",
+    "@rolldown/binding-win32-x64-msvc": "^1.0.0"
   }
 }

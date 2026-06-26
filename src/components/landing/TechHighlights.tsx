@@ -16,8 +16,8 @@ export function TechHighlights() {
             Arquitetura projetada para precisão e privacidade
           </h2>
           <p className="mx-auto max-w-2xl text-muted-foreground">
-            Pipeline RAG híbrido com extração determinística para casos críticos —
-            tudo executando localmente, sob seu controle técnico.
+            Pipeline RAG híbrido com extração determinística para casos críticos
+            — tudo executando localmente, sob seu controle técnico.
           </p>
         </div>
 
@@ -30,8 +30,12 @@ export function TechHighlights() {
               <div className="mb-5 grid h-12 w-12 place-items-center rounded-xl bg-gradient-primary shadow-glow">
                 <item.icon className="h-6 w-6 text-primary-foreground" />
               </div>
-              <h3 className="mb-2 text-base font-semibold sm:text-lg">{item.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+              <h3 className="mb-2 text-base font-semibold sm:text-lg">
+                {item.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {item.description}
+              </p>
             </article>
           ))}
         </div>

@@ -32,8 +32,7 @@ export function FAQ() {
       // Se o item já está bem posicionado (entre 1/3 e 2/3 da viewport),
       // não rola — evita o "pulinho" desconfortável quando não há necessidade.
       const isComfortablyVisible =
-        rect.top > NAVBAR_OFFSET_PX &&
-        rect.bottom < window.innerHeight * 0.85;
+        rect.top > NAVBAR_OFFSET_PX && rect.bottom < window.innerHeight * 0.85;
 
       if (isComfortablyVisible) return;
 
@@ -46,7 +45,10 @@ export function FAQ() {
   }
 
   return (
-    <RevealSection id="faq" className="border-t border-border bg-card/30 py-16 sm:py-24">
+    <RevealSection
+      id="faq"
+      className="border-t border-border bg-card/30 py-16 sm:py-24"
+    >
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 text-center sm:mb-12">
           <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-primary">
@@ -72,7 +74,9 @@ export function FAQ() {
                 />
               </summary>
               <div className="faq-content">
-                <p className="faq-content-inner pb-4 text-sm text-muted-foreground">{item.answer}</p>
+                <p className="faq-content-inner pb-4 text-sm text-muted-foreground">
+                  {item.answer}
+                </p>
               </div>
             </details>
           ))}

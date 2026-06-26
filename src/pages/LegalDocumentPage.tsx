@@ -8,4 +8,3 @@ type LegalDocumentPageProps = {
 export function LegalDocumentPage({ path }: LegalDocumentPageProps) {
   return <LegalPageLayout document={legalDocuments[path]} />;
 }
-

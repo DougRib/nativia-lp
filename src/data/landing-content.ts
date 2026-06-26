@@ -164,14 +164,15 @@ export const videoDemo = {
   ctaHref: "#contato",
 } as const;
 
-// Imports estáticos dos screenshots do sistema. Vite gera URLs com hash
-// para cache-busting e copia os arquivos para o build de produção.
-import loginShot from "@/assets/sistema/login.png";
-import interfaceShot from "@/assets/sistema/interface.png";
-import colecoesShot from "@/assets/sistema/colecoes.png";
-import chatShot from "@/assets/sistema/chat.png";
-import processandoShot from "@/assets/sistema/processando.png";
-import analiseImagemShot from "@/assets/sistema/analise-imagem.png";
+// Imports estáticos dos screenshots em WebP (convertidos via scripts/convert-images.mjs).
+// Reduzimos ~70-80% do tamanho vs PNG mantendo qualidade visual praticamente idêntica.
+// Vite gera URLs com hash para cache-busting e copia os arquivos para o build.
+import loginShot from "@/assets/sistema/login.webp";
+import interfaceShot from "@/assets/sistema/interface.webp";
+import colecoesShot from "@/assets/sistema/colecoes.webp";
+import chatShot from "@/assets/sistema/chat.webp";
+import processandoShot from "@/assets/sistema/processando.webp";
+import analiseImagemShot from "@/assets/sistema/analise-imagem.webp";
 
 /**
  * Bento grid simétrico exibindo a jornada do usuário pelo sistema NativIA

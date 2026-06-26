@@ -3,7 +3,7 @@ export { Hero } from "./Hero";
 export { PainSolution } from "./PainSolution";
 export { Benefits } from "./Benefits";
 export { HowItWorks } from "./HowItWorks";
-export { VideoDemo } from "./VideoDemo";
+//export { VideoDemo } from "./VideoDemo";
 export { UseCases } from "./UseCases";
 export { TechHighlights } from "./TechHighlights";
 export { Security } from "./Security";

@@ -3,7 +3,10 @@ import { RevealSection } from "@/components/ui/reveal-section";
 
 export function Security() {
   return (
-    <RevealSection id="seguranca" className="border-t border-border py-16 sm:py-24">
+    <RevealSection
+      id="seguranca"
+      className="border-t border-border py-16 sm:py-24"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/*
           Layout vertical em todas as resoluções — segue o mesmo padrão de
@@ -21,8 +24,8 @@ export function Security() {
             A confiança que decisões executivas exigem
           </h2>
           <p className="mx-auto mb-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
-            A NativIA foi projetada com privacidade por padrão. Nada de envio de dados para
-            terceiros, nada de surpresas em auditoria.
+            A NativIA foi projetada com privacidade por padrão. Nada de envio de
+            dados para terceiros, nada de surpresas em auditoria.
           </p>
 
           {/*
@@ -53,9 +56,14 @@ export function Security() {
               key={item.title}
               className="card-hover rounded-2xl border border-border bg-card p-6 sm:p-7"
             >
-              <item.icon className="mb-3 h-6 w-6 text-primary" aria-hidden="true" />
+              <item.icon
+                className="mb-3 h-6 w-6 text-primary"
+                aria-hidden="true"
+              />
               <h3 className="mb-1 font-semibold">{item.title}</h3>
-              <p className="text-sm text-muted-foreground">{item.description}</p>
+              <p className="text-sm text-muted-foreground">
+                {item.description}
+              </p>
             </article>
           ))}
         </div>

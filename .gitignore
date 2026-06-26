@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Configurações e artefatos locais do Claude Code (não versionados — variam por máquina/usuário).
+.claude/
+# Snapshots/screenshots gerados pelo MCP do Playwright durante validações locais.
+.playwright-mcp/
+# Template do .env mantido apenas localmente (não vai pro repo).
+.env.example
+
