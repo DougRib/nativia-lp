@@ -42,14 +42,13 @@ export function UseCases() {
         </div>
 
         {/*
-          Frame externo: envolve todos os cards, recebe as linhas de circuito
-          atrás do grid (z-index controlado via `isolate` + `relative z-10` no grid).
-          `overflow-hidden` é importante para conter o SVG das linhas dentro
-          dos cantos arredondados.
+          Frame externo: envolve todos os cards e recebe a camada única de
+          linhas de circuito (z-0). Como os cards têm bg sólido em z-10,
+          as linhas só aparecem nas frestas entre eles e na borda interna
+          do frame — efeito "PCB" sem atrapalhar imagens e texto.
         */}
-        <div className="bento-frame relative isolate overflow-hidden rounded-3xl border border-border bg-card/40 p-3 sm:p-5 lg:p-6">
-          {/* Camada de trás: trilhos do circuito (sutil, atrás dos cards). */}
-          <CircuitLines variant="rails" />
+        <div className="bento-frame relative isolate overflow-hidden rounded-3xl border border-border p-3 sm:p-5 lg:p-6">
+          <CircuitLines />
 
           <div className="relative z-10 grid auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 lg:gap-4">
             {systemShowcase.map((item) => (
@@ -65,14 +64,6 @@ export function UseCases() {
               />
             ))}
           </div>
-
-          {/*
-            Camada da frente: pacotes de luz animados SOBRE os cards. Como têm
-            `pointer-events: none` e opacidade controlada, não interferem nos
-            cliques mas aparecem como linhas de neon viajando pelo bento —
-            o efeito "circuito impresso vivo" pedido pelo usuário.
-          */}
-          <CircuitLines variant="pulses" />
         </div>
       </div>
 
@@ -146,14 +137,18 @@ function BentoCard({
         </span>
       </button>
 
-      <div className="relative flex flex-1 flex-col gap-2 p-5 sm:p-6">
-        <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+      {/*
+        Painel de texto compactado — padding e gap reduzidos para deixar
+        os cards menores e mais densos visualmente, conforme solicitado.
+      */}
+      <div className="relative flex flex-1 flex-col gap-1.5 p-4 sm:p-5">
+        <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">
           {eyebrow}
         </p>
-        <h3 className="text-base font-semibold text-foreground sm:text-lg">
+        <h3 className="text-sm font-semibold text-foreground sm:text-base">
           {title}
         </h3>
-        <p className="text-sm leading-relaxed text-muted-foreground">
+        <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">
           {description}
         </p>
       </div>
@@ -161,99 +156,101 @@ function BentoCard({
   );
 }
 
-// Rotas dos paths — mantidas centralizadas para que rails e pulses
-// usem exatamente a mesma geometria (alinhamento visual perfeito).
+/**
+ * Rotas dos paths com cantos arredondados via Bézier quadrático (Q).
+ *
+ * Cada curva substitui um ângulo de 90° por um arco suave de raio ~20 unidades.
+ * Padrão: `L (x - r) y Q x y x (y + r)` — segue até quase a esquina, descreve
+ * um arco com a esquina como ponto de controle, sai já alinhado com o próximo
+ * segmento. Resultado: traçado fluido tipo "circuito impresso premium".
+ */
 const CIRCUIT_PATHS = [
-  "M 40 60 L 580 60 L 580 360 L 1160 360",
-  "M 1160 60 L 1160 280 L 40 280 L 40 660",
-  "M 40 660 L 620 660 L 620 460 L 1160 460 L 1160 700",
-  "M 380 60 L 380 200 L 820 200 L 820 660",
+  "M 40 60 L 560 60 Q 580 60 580 80 L 580 340 Q 580 360 600 360 L 1160 360",
+  "M 1160 60 L 1160 260 Q 1160 280 1140 280 L 60 280 Q 40 280 40 300 L 40 660",
+  "M 40 660 L 600 660 Q 620 660 620 640 L 620 480 Q 620 460 640 460 L 1140 460 Q 1160 460 1160 480 L 1160 700",
+  "M 380 60 L 380 180 Q 380 200 400 200 L 800 200 Q 820 200 820 220 L 820 660",
 ] as const;
-
-const PULSE_STROKES = [
-  "oklch(0.85 0.18 195)",
-  "oklch(0.78 0.16 200)",
-  "oklch(0.88 0.18 195)",
-  "oklch(0.78 0.16 200)",
-] as const;
-
-type CircuitLinesProps = {
-  /**
-   * - "rails": trilhos estáticos sutis (vão ATRÁS dos cards).
-   * - "pulses": pacotes de luz animados (vão na FRENTE dos cards, com
-   *   pointer-events:none para não bloquear cliques).
-   */
-  variant: "rails" | "pulses";
-};
 
 /**
- * SVG de linhas de circuito que envolvem o bento grid.
+ * Camada única de circuito ATRÁS dos cards (z-0).
  *
- * Renderizado em DUAS instâncias:
- *  1. `variant="rails"` no fundo do frame — trilhos estáticos cyan suaves
- *     que sugerem o "circuito impresso" mesmo quando nada está animando.
- *  2. `variant="pulses"` no topo do frame — paths animados com
- *     `stroke-dasharray` longo + `stroke-dashoffset` em loop, criando o
- *     efeito de "pacotes de luz" viajando por cima dos cards.
+ * Renderiza dois grupos sobre as mesmas geometrias:
+ *  1. Trilhos estáticos finos (0.9px stroke) com gradiente cyan→azul-escuro
+ *     — sempre visíveis, sugerem o "circuito impresso" mesmo parado.
+ *  2. Pacotes de luz animados (1.5px stroke) com o mesmo gradiente,
+ *     percorrendo cada path graças ao stroke-dashoffset animado.
  *
- * Aparece só em `lg+`: nos breakpoints menores os cards empilham
- * verticalmente e a geometria das linhas perde o sentido.
+ * Como tudo fica atrás dos cards (sólidos), as linhas só aparecem nas
+ * frestas e na borda interna do frame — não atrapalham a leitura mas dão
+ * o ar futurista.
+ *
+ * Aparece só em `lg+`: nos breakpoints menores os cards empilham e a
+ * geometria das linhas (calibrada para o grid 4×2) perde o sentido.
  */
-function CircuitLines({ variant }: CircuitLinesProps) {
-  const isPulses = variant === "pulses";
-
+function CircuitLines() {
   return (
     <svg
       aria-hidden="true"
-      className={cn(
-        "circuit-svg absolute inset-0 hidden h-full w-full lg:block",
-        isPulses ? "pointer-events-none z-20 opacity-95" : "z-0 opacity-100",
-      )}
+      className="circuit-svg pointer-events-none absolute inset-0 z-0 hidden h-full w-full lg:block"
       viewBox="0 0 1200 720"
       preserveAspectRatio="none"
     >
       <defs>
         {/*
-          Glow halo cyan ao redor do trail: blur amplo cria a aura
-          "neon", mas o stroke original (SourceGraphic) é mantido por
-          cima preservando nitidez no núcleo — sem isso o trail dilui
-          completamente sobre as imagens dos screenshots.
+          Gradiente cyan → azul-escuro em diagonal. `userSpaceOnUse` faz
+          o gradiente ser definido em coordenadas do viewBox (não relativo
+          a cada path), então todas as linhas compartilham a mesma rampa de
+          cor: trechos próximos do canto superior-esquerdo brilham mais,
+          trechos no canto inferior-direito ficam quase fundindo com o fundo.
         */}
-        <filter id="circuit-glow" x="-25%" y="-25%" width="150%" height="150%">
-          <feGaussianBlur stdDeviation="4" result="blurHalo" />
-          <feMerge>
-            <feMergeNode in="blurHalo" />
-            <feMergeNode in="blurHalo" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
+        <linearGradient
+          id="circuit-gradient"
+          gradientUnits="userSpaceOnUse"
+          x1="80"
+          y1="100"
+          x2="1120"
+          y2="640"
+        >
+          <stop offset="0%" stopColor="oklch(0.82 0.17 200)" />
+          <stop offset="55%" stopColor="oklch(0.5 0.13 225)" />
+          <stop offset="100%" stopColor="oklch(0.25 0.08 255)" />
+        </linearGradient>
       </defs>
 
-      {isPulses ? (
-        // strokeWidth controlado por CSS (.circuit-pulse) — evita conflito
-        // com a animação `circuit-flow` que define a espessura final.
-        <g fill="none" filter="url(#circuit-glow)">
-          {CIRCUIT_PATHS.map((d, index) => (
-            <path
-              key={d}
-              d={d}
-              className={`circuit-pulse circuit-pulse-${index + 1}`}
-              stroke={PULSE_STROKES[index]}
-            />
-          ))}
-        </g>
-      ) : (
-        <g
-          stroke="oklch(0.78 0.16 200 / 0.22)"
-          strokeWidth="1"
-          fill="none"
-          strokeLinecap="round"
-        >
-          {CIRCUIT_PATHS.map((d) => (
-            <path key={d} d={d} />
-          ))}
-        </g>
-      )}
+      {/*
+        Trilhos estáticos: linhas finas e sutis em todas as rotas.
+        strokeLinejoin="round" é redundante aqui (os cantos já são curvas
+        Bézier), mas mantém a renderização suave em browsers que ainda
+        recalculam a junção.
+      */}
+      <g
+        stroke="url(#circuit-gradient)"
+        strokeWidth="0.9"
+        strokeOpacity="0.55"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {CIRCUIT_PATHS.map((d) => (
+          <path key={d} d={d} />
+        ))}
+      </g>
+
+      {/*
+        Pacotes de luz animados — mesmas rotas, stroke mais grosso e com
+        opacidade total. A largura/dasharray/keyframes ficam em styles.css
+        (classe `.circuit-pulse*`).
+      */}
+      <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+        {CIRCUIT_PATHS.map((d, index) => (
+          <path
+            key={d}
+            d={d}
+            className={`circuit-pulse circuit-pulse-${index + 1}`}
+            stroke="url(#circuit-gradient)"
+          />
+        ))}
+      </g>
     </svg>
   );
 }
