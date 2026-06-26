@@ -1,5 +1,8 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import { navLinks } from "@/data/landing-content";
+// Import via Vite garante hash de cache + resolução correta no build de produção.
+// O bug anterior usava uma string literal "src/assets/..." que não passa pelo bundler.
+import logo from "@/assets/nativia-logo1.png";
 
 export function Footer() {
   return (
@@ -8,9 +11,12 @@ export function Footer() {
         <div>
           <div className="mb-4 flex items-center gap-2 text-lg font-bold">
             <img
-              src="src/assets/nativia-logo1.png"
-              alt="Logo NativIA"
+              src={logo}
+              alt="NativIA"
               width={150}
+              height={45}
+              loading="lazy"
+              decoding="async"
             />
           </div>
           <p className="text-sm text-muted-foreground">

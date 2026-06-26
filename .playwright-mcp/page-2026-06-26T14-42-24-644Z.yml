@@ -1,0 +1,508 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - navigation [ref=e5]:
+        - link "NativIA — voltar ao início" [ref=e7] [cursor=pointer]:
+          - /url: /#top
+        - generic [ref=e8]:
+          - link "Benefícios" [ref=e9] [cursor=pointer]:
+            - /url: "#beneficios"
+          - link "Como funciona" [ref=e10] [cursor=pointer]:
+            - /url: "#como-funciona"
+          - link "Demo" [ref=e11] [cursor=pointer]:
+            - /url: "#demo"
+          - link "Casos de uso" [ref=e12] [cursor=pointer]:
+            - /url: "#casos"
+          - link "Tecnologia" [ref=e13] [cursor=pointer]:
+            - /url: "#tecnologia"
+          - link "Segurança" [ref=e14] [cursor=pointer]:
+            - /url: "#seguranca"
+          - link "FAQ" [ref=e15] [cursor=pointer]:
+            - /url: "#faq"
+        - link "Agendar demonstração" [ref=e18] [cursor=pointer]:
+          - /url: /#contato
+          - text: Agendar demonstração
+          - img [ref=e19]
+    - main [ref=e21]:
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - generic [ref=e26]:
+            - generic [ref=e29]: IA privada · On-premise · LGPD
+            - heading "A IA corporativa que nunca expõe os dados da sua empresa." [level=1] [ref=e30]
+            - paragraph [ref=e31]: NativIA é uma plataforma de inteligência artificial privada que processa documentos e gera insights dentro do seu próprio ambiente. Segurança, governança e produtividade sem vazamento de informação.
+            - generic [ref=e32]:
+              - link "Agendar demonstração" [ref=e33] [cursor=pointer]:
+                - /url: "#contato"
+                - text: Agendar demonstração
+                - img [ref=e34]
+              - link "Falar com especialista" [ref=e36] [cursor=pointer]:
+                - /url: mailto:contato@nativia.com.br?subject=Quero%20falar%20com%20um%20especialista%20NativIA
+          - img "Visualização da NativIA processando documentos corporativos com segurança" [ref=e39]
+        - generic [ref=e40]:
+          - generic [ref=e41]:
+            - paragraph [ref=e42]: Segurança por padrão
+            - paragraph [ref=e43]: Arquitetura preparada para operação corporativa com privacidade, controle técnico e conformidade desde a origem dos dados até a resposta da IA.
+          - generic [ref=e45]:
+            - article [ref=e46]:
+              - img [ref=e48]
+              - generic [ref=e51]:
+                - paragraph [ref=e52]: Conformidade LGPD
+                - paragraph [ref=e53]: Privacidade e direitos do titular por design.
+            - article [ref=e54]:
+              - img [ref=e56]
+              - generic [ref=e59]:
+                - paragraph [ref=e60]: Execução on-premise
+                - paragraph [ref=e61]: Roda na sua infraestrutura, com sua GPU.
+            - article [ref=e62]:
+              - img [ref=e64]
+              - generic [ref=e67]:
+                - paragraph [ref=e68]: Sem chamadas externas
+                - paragraph [ref=e69]: Nenhum dado sai do ambiente — modelos rodam localmente.
+      - generic [ref=e71]:
+        - generic [ref=e72]:
+          - paragraph [ref=e73]: Dor x Solução
+          - heading "O custo invisível de não ter uma IA própria" [level=2] [ref=e74]
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - img [ref=e78]
+              - generic [ref=e80]:
+                - paragraph [ref=e81]: Dor
+                - paragraph [ref=e82]: Horas perdidas lendo contratos, laudos e relatórios
+            - generic [ref=e83]:
+              - img [ref=e84]
+              - generic [ref=e87]:
+                - paragraph [ref=e88]: NativIA
+                - paragraph [ref=e89]: Análise automática com extração de dispositivos e pontos críticos em segundos
+          - generic [ref=e90]:
+            - generic [ref=e91]:
+              - img [ref=e92]
+              - generic [ref=e94]:
+                - paragraph [ref=e95]: Dor
+                - paragraph [ref=e96]: Risco de vazamento ao enviar dados para IAs públicas
+            - generic [ref=e97]:
+              - img [ref=e98]
+              - generic [ref=e101]:
+                - paragraph [ref=e102]: NativIA
+                - paragraph [ref=e103]: Processamento 100% interno — nenhuma chamada para OpenAI, Google ou similares
+          - generic [ref=e104]:
+            - generic [ref=e105]:
+              - img [ref=e106]
+              - generic [ref=e108]:
+                - paragraph [ref=e109]: Dor
+                - paragraph [ref=e110]: Retrabalho manual e baixa rastreabilidade de decisões
+            - generic [ref=e111]:
+              - img [ref=e112]
+              - generic [ref=e115]:
+                - paragraph [ref=e116]: NativIA
+                - paragraph [ref=e117]: Histórico auditável de cada consulta, resposta e usuário, com persistência por conversa
+          - generic [ref=e118]:
+            - generic [ref=e119]:
+              - img [ref=e120]
+              - generic [ref=e122]:
+                - paragraph [ref=e123]: Dor
+                - paragraph [ref=e124]: Falta de compartilhamento controlado entre times
+            - generic [ref=e125]:
+              - img [ref=e126]
+              - generic [ref=e129]:
+                - paragraph [ref=e130]: NativIA
+                - paragraph [ref=e131]: Coleções compartilháveis com permissões granulares por usuário e notificações
+      - generic [ref=e133]:
+        - generic [ref=e134]:
+          - paragraph [ref=e135]: Benefícios
+          - heading "Construída para a realidade corporativa" [level=2] [ref=e136]
+          - paragraph [ref=e137]: Tudo o que TI, jurídico e gestão precisam para adotar IA com segurança.
+        - generic [ref=e138]:
+          - article [ref=e139]:
+            - img [ref=e141]
+            - heading "Segurança e privacidade total" [level=3] [ref=e143]
+            - paragraph [ref=e144]: Dados, prompts e respostas permanecem dentro do seu perímetro corporativo. Zero envio para serviços externos.
+          - article [ref=e145]:
+            - img [ref=e147]
+            - heading "Implantação local / on-premise" [level=3] [ref=e150]
+            - paragraph [ref=e151]: "Stack containerizado: backend, banco, vetores e LLM rodam em servidores próprios ou nuvem dedicada."
+          - article [ref=e152]:
+            - img [ref=e154]
+            - heading "5 modos de análise auto-detectados" [level=3] [ref=e159]
+            - paragraph [ref=e160]: Documental, jurídica, financeira, dados tabulares e imagens — o sistema reconhece o tipo de arquivo e seleciona o pipeline ideal.
+          - article [ref=e161]:
+            - img [ref=e163]
+            - heading "Ganho real de produtividade" [level=3] [ref=e165]
+            - paragraph [ref=e166]: Reduz tarefas repetitivas de leitura/conferência e libera o time para decisões de maior valor.
+          - article [ref=e167]:
+            - img [ref=e169]
+            - heading "Governança e auditoria" [level=3] [ref=e173]
+            - paragraph [ref=e174]: Logs detalhados de cada consulta, resposta e usuário, com histórico persistido por conversa.
+          - article [ref=e175]:
+            - img [ref=e177]
+            - heading "Integração corporativa real" [level=3] [ref=e181]
+            - paragraph [ref=e182]: REST API, SSO via Keycloak (SAML/OIDC) e integração com diretórios LDAP/Active Directory.
+      - generic [ref=e184]:
+        - generic [ref=e185]:
+          - paragraph [ref=e186]: Como funciona
+          - heading "Do documento ao insight em minutos" [level=2] [ref=e187]
+        - generic [ref=e188]:
+          - article [ref=e189]:
+            - img [ref=e190]
+            - heading "1. Upload de documentos" [level=3] [ref=e193]
+            - paragraph [ref=e194]: Envie PDFs, planilhas, contratos e imagens para o ambiente seguro da NativIA.
+          - article [ref=e195]:
+            - img [ref=e196]
+            - heading "2. Organize em coleções" [level=3] [ref=e198]
+            - paragraph [ref=e199]: Agrupe por acervo e compartilhe com colegas com permissão controlada.
+          - article [ref=e200]:
+            - img [ref=e201]
+            - heading "3. Análise com IA privada" [level=3] [ref=e204]
+            - paragraph [ref=e205]: "O sistema detecta o tipo de documento e ativa o modo correto: documental, jurídico, financeiro, dados ou imagem."
+          - article [ref=e206]:
+            - img [ref=e207]
+            - heading "4. Respostas e insights" [level=3] [ref=e209]
+            - paragraph [ref=e210]: Receba resumos, cálculos, citações exatas de dispositivos e respostas fundamentadas nos seus documentos.
+          - article [ref=e211]:
+            - img [ref=e212]
+            - heading "5. Exporte resultados" [level=3] [ref=e215]
+            - paragraph [ref=e216]: Baixe relatórios prontos ou integre as saídas aos seus sistemas internos via API.
+      - generic [ref=e218]:
+        - generic [ref=e219]:
+          - paragraph [ref=e220]: Casos de uso
+          - heading "O sistema em ação" [level=2] [ref=e221]
+          - paragraph [ref=e222]: Um tour visual pelas telas reais da plataforma — do acesso seguro à análise multimodal, tudo dentro do seu ambiente.
+        - generic [ref=e223]:
+          - article [ref=e224]:
+            - img "Tela inicial do NativIA mostrando histórico de conversas, documentos e chat com IA" [ref=e226]
+            - generic [ref=e227]:
+              - paragraph [ref=e228]: Hub central
+              - heading "Assistente de IA empresarial" [level=3] [ref=e229]
+              - paragraph [ref=e230]: Uma única tela reúne histórico de conversas, documentos da coleção ativa e chat com IA — tudo executando 100% on-premise.
+          - article [ref=e231]:
+            - img "Tela de coleções do NativIA com cards de diferentes acervos de documentos" [ref=e233]
+            - generic [ref=e234]:
+              - paragraph [ref=e235]: Organização
+              - heading "Coleções compartilháveis" [level=3] [ref=e236]
+              - paragraph [ref=e237]: Agrupe documentos por área e compartilhe com permissões granulares.
+          - article [ref=e238]:
+            - img "Chat do NativIA exibindo análise documental com tabela estruturada de resultados" [ref=e240]
+            - generic [ref=e241]:
+              - paragraph [ref=e242]: Análise documental
+              - heading "Respostas estruturadas" [level=3] [ref=e243]
+              - paragraph [ref=e244]: Tabelas, citações e referências do trecho exato — não só texto solto.
+          - article [ref=e245]:
+            - img "Tela do NativIA mostrando o pipeline de processamento de uma análise em execução" [ref=e247]
+            - generic [ref=e248]:
+              - paragraph [ref=e249]: Pipeline transparente
+              - heading "Cada etapa visível" [level=3] [ref=e250]
+              - paragraph [ref=e251]: Validação, ingestão, análise multimodal — você vê tudo em tempo real.
+          - article [ref=e252]:
+            - img "Tela de login do Sistema IA Empresarial NativIA" [ref=e254]
+            - generic [ref=e255]:
+              - paragraph [ref=e256]: Acesso corporativo
+              - heading "Autenticação SSO" [level=3] [ref=e257]
+              - paragraph [ref=e258]: Login via Keycloak (SAML/OIDC) integrado a LDAP/AD da empresa.
+          - article [ref=e259]:
+            - img "Resultado da análise multimodal de imagem realizada pelo NativIA, com descrição visual detalhada" [ref=e261]
+            - generic [ref=e262]:
+              - paragraph [ref=e263]: Multimodal por padrão
+              - heading "Visão computacional integrada" [level=3] [ref=e264]
+              - paragraph [ref=e265]: OCR + análise de imagens e gráficos via Qwen-VL, no mesmo fluxo de chat dos documentos textuais. Zero envio para serviços externos.
+      - generic [ref=e267]:
+        - generic [ref=e268]:
+          - paragraph [ref=e269]: Por dentro
+          - heading "Arquitetura projetada para precisão e privacidade" [level=2] [ref=e270]
+          - paragraph [ref=e271]: Pipeline RAG híbrido com extração determinística para casos críticos — tudo executando localmente, sob seu controle técnico.
+        - generic [ref=e272]:
+          - article [ref=e273]:
+            - img [ref=e275]
+            - heading "LLM local em GPU" [level=3] [ref=e278]
+            - paragraph [ref=e279]: Modelo avançado de Inteligência Artificial de código aberto rodando via Ollama em GPU NVIDIA. Sem dependência de OpenAI, Google ou Anthropic.
+          - article [ref=e280]:
+            - img [ref=e282]
+            - heading "RAG híbrido avançado" [level=3] [ref=e286]
+            - paragraph [ref=e287]: Embeddings semânticos (bge-m3, 1024-dim) + busca textual ranqueada (FTS PT-BR) + reranker neural (bge-reranker-v2-m3) — mais preciso em documentos densos.
+          - article [ref=e288]:
+            - img [ref=e290]
+            - heading "Determinístico no financeiro" [level=3] [ref=e292]
+            - paragraph [ref=e293]: Holerites e extratos bancários são processados com extração estruturada — os valores não passam por geração de texto, eliminando alucinação numérica.
+          - article [ref=e294]:
+            - img [ref=e296]
+            - heading "Roteamento automático de tarefas" [level=3] [ref=e301]
+            - paragraph [ref=e302]: "O sistema reconhece o tipo de documento na ingestão e direciona para o pipeline ideal: documental, jurídico, financeiro, dados ou imagem."
+          - article [ref=e303]:
+            - img [ref=e305]
+            - heading "Transcrição de áudio offline" [level=3] [ref=e308]
+            - paragraph [ref=e309]: Whisper local para entrada por voz e transcrição de gravações sem enviar áudio para serviços externos.
+          - article [ref=e310]:
+            - img [ref=e312]
+            - heading "Multimodal por padrão" [level=3] [ref=e315]
+            - paragraph [ref=e316]: Qwen-VL para análise de imagens (OCR, descrição, gráficos) integrado ao mesmo fluxo de chat dos documentos textuais.
+          - article [ref=e317]:
+            - img [ref=e319]
+            - heading "Citação de evidência em cada resposta" [level=3] [ref=e322]
+            - paragraph [ref=e323]: Toda resposta vem com o trecho exato do documento que a fundamentou — pronto para auditoria, due diligence e validação humana.
+          - article [ref=e324]:
+            - img [ref=e326]
+            - heading "Multi-arquivo e memória conversacional" [level=3] [ref=e329]
+            - paragraph [ref=e330]: Pergunte sobre vários documentos ao mesmo tempo dentro de uma coleção e continue a conversa sem repetir o contexto — o histórico é persistido por conversa.
+      - generic [ref=e332]:
+        - generic [ref=e333]:
+          - paragraph [ref=e334]: Segurança & Conformidade
+          - heading "A confiança que decisões executivas exigem" [level=2] [ref=e335]
+          - paragraph [ref=e336]: A NativIA foi projetada com privacidade por padrão. Nada de envio de dados para terceiros, nada de surpresas em auditoria.
+          - generic [ref=e337]:
+            - generic [ref=e338]: LGPD
+            - generic [ref=e339]: On-premise
+            - generic [ref=e340]: SSO/SAML/OIDC
+            - generic [ref=e341]: LDAP/AD
+            - generic [ref=e342]: Logs auditáveis
+            - generic [ref=e343]: TLS
+            - generic [ref=e344]: Zero envio externo
+        - generic [ref=e345]:
+          - article [ref=e346]:
+            - img [ref=e347]
+            - heading "Conformidade LGPD" [level=3] [ref=e350]
+            - paragraph [ref=e351]: Tratamento de dados alinhado às exigências legais brasileiras, com exclusão completa de conta a pedido.
+          - article [ref=e352]:
+            - img [ref=e353]
+            - heading "Ambiente controlado" [level=3] [ref=e356]
+            - paragraph [ref=e357]: Dados, modelos e índices vetoriais permanecem em infraestrutura definida pela sua empresa.
+          - article [ref=e358]:
+            - img [ref=e359]
+            - heading "Controle de acesso" [level=3] [ref=e364]
+            - paragraph [ref=e365]: Permissões por usuário e grupo, com SSO via Keycloak (SAML/OIDC) e diretórios LDAP/AD.
+          - article [ref=e366]:
+            - img [ref=e367]
+            - heading "Rastreabilidade total" [level=3] [ref=e370]
+            - paragraph [ref=e371]: Logs detalhados de todas as interações para auditoria, com histórico persistido por conversa.
+          - article [ref=e372]:
+            - img [ref=e373]
+            - heading "Direito ao esquecimento (LGPD)" [level=3] [ref=e378]
+            - paragraph [ref=e379]: "Exclusão completa de conta pelo próprio usuário via interface: remove conta, documentos, vetores, histórico e arquivos associados."
+      - generic [ref=e381]:
+        - generic [ref=e382]:
+          - paragraph [ref=e383]: Comparativo
+          - heading "NativIA vs. IAs públicas" [level=2] [ref=e384]
+        - table [ref=e386]:
+          - rowgroup [ref=e387]:
+            - row "Critério NativIA IA pública" [ref=e388]:
+              - columnheader "Critério" [ref=e389]
+              - columnheader "NativIA" [ref=e390]
+              - columnheader "IA pública" [ref=e391]
+          - rowgroup [ref=e392]:
+            - row "Dados permanecem na empresa" [ref=e393]:
+              - cell "Dados permanecem na empresa" [ref=e394]
+              - cell [ref=e395]:
+                - img [ref=e396]
+              - cell [ref=e398]:
+                - img [ref=e399]
+            - row "Execução on-premise / nuvem privada" [ref=e402]:
+              - cell "Execução on-premise / nuvem privada" [ref=e403]
+              - cell [ref=e404]:
+                - img [ref=e405]
+              - cell [ref=e407]:
+                - img [ref=e408]
+            - row "Conformidade com LGPD por design Parcial" [ref=e411]:
+              - cell "Conformidade com LGPD por design" [ref=e412]
+              - cell [ref=e413]:
+                - img [ref=e414]
+              - cell "Parcial" [ref=e416]
+            - row "Logs e auditoria completa de uso" [ref=e417]:
+              - cell "Logs e auditoria completa de uso" [ref=e418]
+              - cell [ref=e419]:
+                - img [ref=e420]
+              - cell [ref=e422]:
+                - img [ref=e423]
+            - row "Integração com SSO corporativo" [ref=e426]:
+              - cell "Integração com SSO corporativo" [ref=e427]
+              - cell [ref=e428]:
+                - img [ref=e429]
+              - cell [ref=e431]:
+                - img [ref=e432]
+            - row "Coleções compartilháveis com permissões" [ref=e435]:
+              - cell "Coleções compartilháveis com permissões" [ref=e436]
+              - cell [ref=e437]:
+                - img [ref=e438]
+              - cell [ref=e440]:
+                - img [ref=e441]
+            - row "Sem uso dos seus dados para treinamento Somente em planos Enterprise" [ref=e444]:
+              - cell "Sem uso dos seus dados para treinamento" [ref=e445]
+              - cell [ref=e446]:
+                - img [ref=e447]
+              - cell "Somente em planos Enterprise" [ref=e449]
+            - row "Citação do trecho-fonte em cada resposta" [ref=e450]:
+              - cell "Citação do trecho-fonte em cada resposta" [ref=e451]
+              - cell [ref=e452]:
+                - img [ref=e453]
+              - cell [ref=e455]:
+                - img [ref=e456]
+            - row "Determinismo numérico em holerites e extratos" [ref=e459]:
+              - cell "Determinismo numérico em holerites e extratos" [ref=e460]
+              - cell [ref=e461]:
+                - img [ref=e462]
+              - cell [ref=e464]:
+                - img [ref=e465]
+            - row "Exclusão completa de conta via UI (LGPD)" [ref=e468]:
+              - cell "Exclusão completa de conta via UI (LGPD)" [ref=e469]
+              - cell [ref=e470]:
+                - img [ref=e471]
+              - cell [ref=e473]:
+                - img [ref=e474]
+      - generic [ref=e478]:
+        - generic [ref=e479]:
+          - paragraph [ref=e480]: Perguntas frequentes
+          - heading "Respostas para áreas técnica e de negócio" [level=2] [ref=e481]
+        - generic [ref=e482]:
+          - group [ref=e483]:
+            - generic "A NativIA realmente roda on-premise?" [ref=e484] [cursor=pointer]:
+              - text: A NativIA realmente roda on-premise?
+              - img [ref=e485]
+          - group [ref=e487]:
+            - generic "Quais modelos de IA são usados?" [ref=e488] [cursor=pointer]:
+              - text: Quais modelos de IA são usados?
+              - img [ref=e489]
+          - group [ref=e491]:
+            - generic "Os dados são usados para treinar modelos?" [ref=e492] [cursor=pointer]:
+              - text: Os dados são usados para treinar modelos?
+              - img [ref=e493]
+          - group [ref=e495]:
+            - generic "Quanto tempo leva a implantação?" [ref=e496] [cursor=pointer]:
+              - text: Quanto tempo leva a implantação?
+              - img [ref=e497]
+          - group [ref=e499]:
+            - generic "Quais formatos de arquivo são suportados?" [ref=e500] [cursor=pointer]:
+              - text: Quais formatos de arquivo são suportados?
+              - img [ref=e501]
+          - group [ref=e503]:
+            - generic "Como funciona o controle de acesso?" [ref=e504] [cursor=pointer]:
+              - text: Como funciona o controle de acesso?
+              - img [ref=e505]
+          - group [ref=e507]:
+            - generic "Tem suporte a entrada por voz?" [ref=e508] [cursor=pointer]:
+              - text: Tem suporte a entrada por voz?
+              - img [ref=e509]
+          - group [ref=e511]:
+            - generic "Como funciona a integração com nossos sistemas?" [ref=e512] [cursor=pointer]:
+              - text: Como funciona a integração com nossos sistemas?
+              - img [ref=e513]
+          - group [ref=e515]:
+            - generic "Quais são os requisitos de hardware?" [ref=e516] [cursor=pointer]:
+              - text: Quais são os requisitos de hardware?
+              - img [ref=e517]
+          - group [ref=e519]:
+            - generic "Como funciona o OCR em PDFs digitalizados?" [ref=e520] [cursor=pointer]:
+              - text: Como funciona o OCR em PDFs digitalizados?
+              - img [ref=e521]
+          - group [ref=e523]:
+            - generic "Vocês oferecem treinamento e suporte?" [ref=e524] [cursor=pointer]:
+              - text: Vocês oferecem treinamento e suporte?
+              - img [ref=e525]
+          - group [ref=e527]:
+            - generic "Como funciona o modelo de preços?" [ref=e528] [cursor=pointer]:
+              - text: Como funciona o modelo de preços?
+              - img [ref=e529]
+      - generic [ref=e533]:
+        - generic [ref=e534]:
+          - paragraph [ref=e535]: Demonstração
+          - heading "Veja a NativIA aplicada à sua operação" [level=2] [ref=e536]
+          - paragraph [ref=e537]: Em até 45 minutos mostramos como sua empresa pode usar IA privada com segurança total e ROI mensurável.
+          - list [ref=e538]:
+            - listitem [ref=e539]:
+              - img [ref=e540]
+              - text: Análise dos seus casos de uso prioritários
+            - listitem [ref=e543]:
+              - img [ref=e544]
+              - text: Demonstração técnica ao vivo
+            - listitem [ref=e547]:
+              - img [ref=e548]
+              - text: Plano sugerido de implantação
+        - form "Formulário de agendamento de demonstração" [ref=e551]:
+          - generic [ref=e552]:
+            - generic [ref=e553]:
+              - generic [ref=e554]:
+                - generic [ref=e555]: Nome *
+                - textbox "Nome" [ref=e556]
+              - generic [ref=e557]:
+                - generic [ref=e558]: Empresa *
+                - textbox "Empresa" [ref=e559]
+            - generic [ref=e560]:
+              - generic [ref=e561]:
+                - generic [ref=e562]: Cargo *
+                - textbox "Cargo" [ref=e563]
+              - generic [ref=e564]:
+                - generic [ref=e565]: Telefone *
+                - textbox "Telefone" [ref=e566]:
+                  - /placeholder: (11) 99999-9999
+            - generic [ref=e567]:
+              - generic [ref=e568]: E-mail corporativo *
+              - textbox "E-mail corporativo" [ref=e569]:
+                - /placeholder: voce@suaempresa.com.br
+            - generic [ref=e570]:
+              - text: Mensagem (opcional)
+              - textbox "Mensagem (opcional)" [ref=e571]
+            - button "Quero uma demonstração da NativIA" [ref=e572]:
+              - text: Quero uma demonstração da NativIA
+              - img [ref=e573]
+            - paragraph [ref=e575]:
+              - text: Ao enviar, você concorda com nossa
+              - link "política de privacidade" [ref=e576] [cursor=pointer]:
+                - /url: /politica-de-privacidade
+              - text: .
+    - contentinfo [ref=e577]:
+      - generic [ref=e578]:
+        - generic [ref=e579]:
+          - img "NativIA" [ref=e581]
+          - paragraph [ref=e582]: IA corporativa privada com execução on-premise.
+        - generic [ref=e583]:
+          - heading "Produto" [level=3] [ref=e584]
+          - list [ref=e585]:
+            - listitem [ref=e586]:
+              - link "Benefícios" [ref=e587] [cursor=pointer]:
+                - /url: "#beneficios"
+            - listitem [ref=e588]:
+              - link "Como funciona" [ref=e589] [cursor=pointer]:
+                - /url: "#como-funciona"
+            - listitem [ref=e590]:
+              - link "Demo" [ref=e591] [cursor=pointer]:
+                - /url: "#demo"
+            - listitem [ref=e592]:
+              - link "Casos de uso" [ref=e593] [cursor=pointer]:
+                - /url: "#casos"
+            - listitem [ref=e594]:
+              - link "Tecnologia" [ref=e595] [cursor=pointer]:
+                - /url: "#tecnologia"
+            - listitem [ref=e596]:
+              - link "Segurança" [ref=e597] [cursor=pointer]:
+                - /url: "#seguranca"
+            - listitem [ref=e598]:
+              - link "FAQ" [ref=e599] [cursor=pointer]:
+                - /url: "#faq"
+        - generic [ref=e600]:
+          - heading "Institucional" [level=3] [ref=e601]
+          - list [ref=e602]:
+            - listitem [ref=e603]:
+              - link "Sobre" [ref=e604] [cursor=pointer]:
+                - /url: /sobre
+            - listitem [ref=e605]:
+              - link "Política de Privacidade" [ref=e606] [cursor=pointer]:
+                - /url: /politica-de-privacidade
+            - listitem [ref=e607]:
+              - link "Termos de Uso" [ref=e608] [cursor=pointer]:
+                - /url: /termos-de-uso
+            - listitem [ref=e609]:
+              - link "LGPD" [ref=e610] [cursor=pointer]:
+                - /url: /lgpd
+        - generic [ref=e611]:
+          - heading "Contato" [level=3] [ref=e612]
+          - list [ref=e613]:
+            - listitem [ref=e614]:
+              - img [ref=e615]
+              - link "contato@nativia.com.br" [ref=e618] [cursor=pointer]:
+                - /url: mailto:contato@nativia.com.br
+            - listitem [ref=e619]:
+              - img [ref=e620]
+              - link "+55 (11) 4000-0000" [ref=e622] [cursor=pointer]:
+                - /url: tel:+551140000000
+            - listitem [ref=e623]:
+              - img [ref=e624]
+              - text: São Paulo · Brasil
+      - generic [ref=e627]: © 2026 NativIA. Todos os direitos reservados.
+  - button "Voltar ao topo":
+    - img

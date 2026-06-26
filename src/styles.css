@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+/*
+  CSS Houdini `@property` — registra `--gradient-angle` como tipo `<angle>`,
+  o que permite ao browser interpolar valores entre frames (0deg → 360deg)
+  via @keyframes. Sem essa declaração, custom properties não animam:
+  trocariam abruptamente de 0deg para 360deg.
+
+  Suporte: Chromium 85+, Safari 16.4+, Firefox 128+. Browsers sem suporte
+  veem o gradiente parado — degradação silenciosa, sem quebra visual.
+*/
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 :root {
   --background: oklch(0.16 0.03 250);
   --foreground: oklch(0.97 0.01 240);
@@ -211,6 +226,30 @@
     transform: translateY(0);
   }
 
+  /* Flash de confirmação quando o usuário abre um item do FAQ:
+     anel ciano que pulsa por ~600ms ao redor do card, dando feedback
+     visual claro de que o clique foi registrado. */
+  .faq-item[open] {
+    animation: faq-open-flash 650ms ease-out;
+    border-color: oklch(0.78 0.16 200 / 0.55);
+  }
+
+  .faq-item[open] summary {
+    color: var(--color-foreground);
+  }
+
+  @keyframes faq-open-flash {
+    0% {
+      box-shadow: 0 0 0 0 oklch(0.78 0.16 200 / 0);
+    }
+    40% {
+      box-shadow: 0 0 0 6px oklch(0.78 0.16 200 / 0.22);
+    }
+    100% {
+      box-shadow: 0 0 0 0 oklch(0.78 0.16 200 / 0);
+    }
+  }
+
   @keyframes float-slow {
     0%,
     100% {
@@ -240,6 +279,558 @@
     animation: reveal-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
 
+  /* ============================================================
+     NAV LINK — efeito futurista para links do menu do Navbar.
+
+     Estados visuais:
+       - default: cor muted, sem underline
+       - hover:   cor foreground, underline gradiente cresce do centro,
+                  glow suave atrás do texto
+       - active (scroll spy): mesma visualidade do hover + dot pulsante,
+                  underline permanente, cor primary discreta no texto
+       - .nav-link-clicked: ripple rápido (~600ms) quando o usuário clica,
+                  reforçando o feedback de "você ativou esta navegação"
+     ============================================================ */
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.625rem;
+    border-radius: 0.5rem;
+    color: var(--color-muted-foreground);
+    transition:
+      color 0.25s ease,
+      background-color 0.25s ease,
+      transform 0.2s ease;
+    isolation: isolate;
+  }
+
+  /* Underline gradiente — barra fina abaixo do texto que cresce do centro. */
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 2px;
+    height: 2px;
+    width: calc(100% - 1.25rem);
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.78 0.16 200 / 0.9),
+      transparent
+    );
+    border-radius: 999px;
+    transition:
+      transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Glow suave por trás do texto — aparece no hover/active. */
+  .nav-link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      ellipse at center,
+      oklch(0.78 0.16 200 / 0.18),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .nav-link:hover {
+    color: var(--color-foreground);
+  }
+
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    transform: translateX(-50%) scaleX(1);
+    opacity: 1;
+  }
+
+  .nav-link:hover::before,
+  .nav-link:focus-visible::before {
+    opacity: 1;
+  }
+
+  /* Estado ATIVO (seção atual no scrollspy / página atual em legais). */
+  .nav-link-active {
+    color: var(--color-foreground);
+  }
+
+  .nav-link-active::after {
+    transform: translateX(-50%) scaleX(1);
+    opacity: 1;
+    /* Sutil pulso de luminosidade na barra ativa para sensação "viva". */
+    animation: nav-underline-pulse 2.4s ease-in-out infinite;
+  }
+
+  .nav-link-active::before {
+    opacity: 1;
+  }
+
+  /* Ripple ao clicar — eco que se expande do centro do link.
+     Aplicado por classe temporária via JS e removido após ~600ms. */
+  .nav-link-clicked::before {
+    animation: nav-link-ripple 0.65s ease-out;
+  }
+
+  @keyframes nav-link-ripple {
+    0% {
+      opacity: 0.6;
+      transform: scale(0.4);
+    }
+    60% {
+      opacity: 0.3;
+      transform: scale(1.15);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.3);
+    }
+  }
+
+  @keyframes nav-underline-pulse {
+    0%, 100% {
+      filter: brightness(1);
+    }
+    50% {
+      filter: brightness(1.4);
+    }
+  }
+
+  /* ============================================================
+     MOBILE DRAWER — animação de entrada/saída do menu hambúrguer.
+
+     Estratégia:
+       - .mobile-drawer-open  : aplicado quando o drawer está montando
+         (animação `drawer-enter` desce + faz fade-in).
+       - .mobile-drawer-closing : aplicado quando o React sinalizou fechar;
+         toca `drawer-exit` antes do unmount, controlado pelo timeout no
+         componente Navbar (DRAWER_EXIT_DURATION_MS).
+       - .mobile-drawer-item : cada link/CTA dentro do drawer recebe um
+         atraso escalonado via custom prop --drawer-item-delay, gerando
+         a sensação de "cascata" futurista.
+     ============================================================ */
+  .mobile-drawer {
+    transform-origin: top center;
+    box-shadow:
+      0 28px 60px -36px oklch(0 0 0 / 0.55),
+      0 0 0 1px oklch(0.78 0.16 200 / 0.18);
+  }
+
+  .mobile-drawer-open {
+    animation: drawer-enter 280ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .mobile-drawer-closing {
+    animation: drawer-exit 240ms cubic-bezier(0.4, 0, 0.8, 0.4) both;
+    pointer-events: none;
+  }
+
+  .mobile-drawer-item {
+    animation: drawer-item-enter 360ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: var(--drawer-item-delay, 0ms);
+  }
+
+  /* Itens não animam na saída — o próprio container já desliza para cima,
+     então qualquer animação adicional só atrapalharia a percepção. */
+  .mobile-drawer-closing .mobile-drawer-item {
+    animation: none;
+  }
+
+  @keyframes drawer-enter {
+    0% {
+      opacity: 0;
+      transform: translateY(-14px) scale(0.97);
+      filter: blur(2px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes drawer-exit {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.98);
+    }
+  }
+
+  @keyframes drawer-item-enter {
+    0% {
+      opacity: 0;
+      transform: translateX(-12px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* ============================================================
+     BACK BUTTON — variação especial usada na header das páginas legais.
+     Usa shimmer ao hover + ícone que desliza à esquerda.
+     ============================================================ */
+  .btn-back {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .btn-back::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 25%,
+      oklch(0.78 0.16 200 / 0.18) 50%,
+      transparent 75%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .btn-back:hover::before,
+  .btn-back:focus-visible::before {
+    transform: translateX(100%);
+  }
+
+  .btn-back .btn-back-icon {
+    transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .btn-back:hover .btn-back-icon,
+  .btn-back:focus-visible .btn-back-icon {
+    transform: translateX(-3px);
+  }
+
+  /* ============================================================
+     HERO BADGE — pill futurista do Hero com:
+       1) Borda gradiente cônica em rotação contínua (mesma técnica de
+          mask-composite do botão `.btn-gradient-border`, mas mais lenta:
+          6s vs 4s — proporcional ao tamanho menor do badge).
+       2) Glow ciano "respirando" via animação de box-shadow (3s).
+       3) Fundo com backdrop-blur sutil para destacar contra o gradiente
+          do hero.
+       4) Texto sutilmente brighter no hover/focus, reforçando interatividade
+          (mesmo que o badge não seja clicável, dá vida ao componente).
+     ============================================================ */
+  .hero-badge {
+    position: relative;
+    background-color: oklch(0.2 0.04 250 / 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: hero-badge-glow 3s ease-in-out infinite;
+  }
+
+  .hero-badge::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--gradient-angle, 0deg),
+      oklch(0.78 0.16 200 / 0.1),
+      oklch(0.78 0.16 200) 25%,
+      oklch(0.88 0.18 195) 50%,
+      oklch(0.78 0.16 200) 75%,
+      oklch(0.78 0.16 200 / 0.1)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    /* Reusa o keyframe `spin-gradient` (definido junto ao botão) — 6s para
+       uma rotação mais sutil, condizente com o tamanho discreto do badge. */
+    animation: spin-gradient 6s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes hero-badge-glow {
+    0%, 100% {
+      box-shadow:
+        0 0 0 1px oklch(0.78 0.16 200 / 0.18),
+        0 0 18px -10px oklch(0.78 0.16 200 / 0.45);
+    }
+    50% {
+      box-shadow:
+        0 0 0 1px oklch(0.78 0.16 200 / 0.35),
+        0 0 28px -6px oklch(0.78 0.16 200 / 0.65);
+    }
+  }
+
+  /* ============================================================
+     BENTO FRAME — quadro externo que envolve todo o symmetric bento grid.
+
+     Inclui um background gradiente sutil + uma "aura" interna ciano para
+     reforçar a sensação de "circuito impresso" sob os cartões.
+     A própria classe não anima nada — as animações ficam nas linhas SVG.
+     ============================================================ */
+  .bento-frame {
+    background:
+      radial-gradient(
+        ellipse at top left,
+        oklch(0.78 0.16 200 / 0.08),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse at bottom right,
+        oklch(0.78 0.16 200 / 0.08),
+        transparent 55%
+      ),
+      oklch(0.18 0.03 250 / 0.5);
+    box-shadow:
+      inset 0 1px 0 oklch(0.78 0.16 200 / 0.08),
+      0 30px 60px -40px oklch(0 0 0 / 0.6);
+  }
+
+  /* ============================================================
+     CIRCUIT LINES — linhas de circuito SVG animadas atrás dos cards.
+
+     Estratégia da animação:
+       - Cada path "pulso" recebe `stroke-dasharray: <short> <long>`, que
+         cria um traço curto separado por um espaço bem maior — efeito de
+         "pacote de luz" único correndo ao longo do caminho.
+       - `stroke-dashoffset` é animado de `<long+short>` até `0`, fazendo
+         o traço viajar do início ao fim da curva.
+       - Cada pulso tem delay/duração diferentes para parecerem pulsos
+         independentes — passam um por um pelos cartões.
+
+     `pathLength="100"` normaliza o comprimento do path para 100 unidades,
+     facilitando o cálculo de dasharray independente da geometria real.
+     ============================================================ */
+  .circuit-pulse {
+    /*
+      Dasharray longo cria um "comet trail" visível — 200 unidades brilhantes
+      seguidas por uma lacuna gigante (1800) para que apenas UM pulso esteja
+      no path por vez. Os valores são em unidades do viewBox do SVG
+      (0..1200 horizontal, 0..720 vertical). Stroke mais grosso (4) para
+      destaque sobre as imagens dos screenshots.
+    */
+    stroke-dasharray: 200 1800;
+    animation: circuit-flow 7s linear infinite;
+    stroke-width: 4;
+    stroke-linecap: round;
+  }
+
+  .circuit-pulse-1 { animation-delay: 0s; }
+  .circuit-pulse-2 { animation-delay: 1.75s; animation-duration: 8s; }
+  .circuit-pulse-3 { animation-delay: 3.5s; animation-duration: 7.5s; }
+  .circuit-pulse-4 { animation-delay: 5.25s; animation-duration: 9s; }
+
+  @keyframes circuit-flow {
+    /*
+      A animação faz o "trail" (200 unidades brilhantes) viajar do início ao
+      fim do path:
+       - offset 300: dash ainda fora do path (antes do começo) → invisível.
+       - offset -1800: dash além do fim do path mais longo (~1700 unid).
+      Importante: animar pelo PERÍODO do dasharray (2000) deixaria o dash
+      no mesmo lugar — precisamos atravessar o path inteiro, por isso o
+      deslocamento total é 2100 unidades (300 → -1800).
+    */
+    0% {
+      stroke-dashoffset: 300;
+      opacity: 0;
+    }
+    5% {
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% {
+      stroke-dashoffset: -1800;
+      opacity: 0;
+    }
+  }
+
+  /* ============================================================
+     IMAGE ZOOM MODAL — overlay fullscreen quando o usuário clica numa
+     imagem do bento grid para vê-la ampliada.
+
+     - Backdrop: blur + escurecimento via gradiente para focar atenção na imagem.
+     - Animações suaves de entrada (fade + scale) — uma só vez na montagem.
+     ============================================================ */
+  .image-zoom-overlay {
+    background: oklch(0.08 0.02 250 / 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: zoom-overlay-enter 220ms ease-out;
+  }
+
+  .image-zoom-content {
+    animation: zoom-content-enter 280ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  @keyframes zoom-overlay-enter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes zoom-content-enter {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  /* ============================================================
+     BENTO CARD — cartões do symmetric bento grid em "Casos de uso".
+
+     Efeitos no hover:
+       - Borda muda para ciano (cor primary) e ganha leve glow externo.
+       - Cartão sobe 4px (translateY) reforçando interatividade.
+       - Imagem dentro do card faz zoom suave (controlado em UseCases.tsx
+         via `group-hover:scale-[1.04]`).
+
+     A borda padrão é a `border-border` aplicada via Tailwind; aqui
+     adicionamos só os refinamentos do estado hover para não duplicar
+     responsabilidade.
+     ============================================================ */
+  .bento-card {
+    transform: translateZ(0);
+    will-change: transform, box-shadow, border-color;
+  }
+
+  .bento-card:hover {
+    transform: translateY(-4px);
+    border-color: oklch(0.78 0.16 200 / 0.55);
+    box-shadow:
+      0 24px 50px -28px oklch(0.78 0.16 200 / 0.55),
+      0 0 0 1px oklch(0.78 0.16 200 / 0.15);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bento-card,
+    .bento-card img {
+      transition: none !important;
+      transform: none !important;
+    }
+  }
+
+  /* ============================================================
+     HOVER BORDER GRADIENT — variante de botão com borda gradiente
+     animada que rota continuamente, e no hover preenche o interior
+     com glow + acelera a rotação.
+
+     Estrutura (sem isolation, sem z-index negativo — evita o bug em que
+     pseudo com z-index:-2 aparece ACIMA do background do elemento quando
+     o pai cria stacking context):
+
+       1) Botão tem fundo sólido escuro como base visual.
+       2) ::before recebe o conic-gradient cobrindo toda a área do botão,
+          mas é mascarado com a técnica `mask-composite: exclude` que
+          deixa visível apenas a faixa do `padding` (1.5px) — ou seja,
+          a borda. O interior do gradiente é cortado pela máscara.
+       3) Hover usa `inset box-shadow` ciano que expande "de fora pra
+          dentro" criando a sensação de preenchimento radial sem precisar
+          de outro pseudo (que conflitaria com o conteúdo do botão).
+
+     `--gradient-angle` é animado via @property + @keyframes para um giro
+     suave contínuo. No hover, a animação acelera ~2.5x.
+     ============================================================ */
+  .btn-gradient-border {
+    position: relative;
+    background-color: oklch(0.16 0.04 250);
+    color: var(--color-foreground);
+    transition:
+      color 0.3s ease,
+      background-color 0.4s ease,
+      box-shadow 0.4s ease,
+      transform 0.2s ease;
+  }
+
+  .btn-gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--gradient-angle, 0deg),
+      oklch(0.78 0.16 200 / 0.18),
+      oklch(0.78 0.16 200) 25%,
+      oklch(0.88 0.18 195) 50%,
+      oklch(0.78 0.16 200) 75%,
+      oklch(0.78 0.16 200 / 0.18)
+    );
+    /*
+      Técnica de "border via mask":
+      - Camada 1: linear-gradient preto cobrindo apenas a content-box
+        (área interna ao padding).
+      - Camada 2: linear-gradient preto cobrindo TUDO (incluindo o padding).
+      - mask-composite: exclude pega o XOR — só a região do padding (a "borda")
+        fica opaca, revelando o conic-gradient ali. O interior fica transparente.
+      Resultado: gradiente cônico visível APENAS como borda de 1.5px.
+    */
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+    animation: spin-gradient 4s linear infinite;
+  }
+
+  .btn-gradient-border:hover,
+  .btn-gradient-border:focus-visible {
+    /* Inset box-shadow simula preenchimento radial vindo das bordas para
+       o centro. Combinado com box-shadow externo, cria o efeito "expandir
+       para o container inteiro" pedido pelo usuário. */
+    background-color: oklch(0.22 0.05 240);
+    box-shadow:
+      inset 0 0 36px oklch(0.78 0.16 200 / 0.4),
+      0 0 32px -6px oklch(0.78 0.16 200 / 0.55);
+    transform: translateY(-1px);
+  }
+
+  .btn-gradient-border:hover::before,
+  .btn-gradient-border:focus-visible::before {
+    /* Rotação ~2.5x mais rápida no hover — feedback de interatividade. */
+    animation-duration: 1.6s;
+  }
+
+  .btn-gradient-border:active {
+    transform: translateY(0) scale(0.985);
+  }
+
+  @keyframes spin-gradient {
+    to {
+      --gradient-angle: 360deg;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .reveal-section {
       opacity: 1;
@@ -251,6 +842,27 @@
     .faq-content {
       transition: none;
       transform: none;
+    }
+
+    /* Mantém visibilidade dos estados, mas desliga as animações infinitas
+       e transições longas — exigência WCAG 2.3.3 (Animation from Interactions). */
+    .nav-link::after,
+    .nav-link::before,
+    .btn-back::before,
+    .btn-back-icon,
+    .mobile-drawer-open,
+    .mobile-drawer-closing,
+    .mobile-drawer-item,
+    .faq-item[open],
+    .btn-gradient-border,
+    .btn-gradient-border::before,
+    .hero-badge,
+    .hero-badge::before,
+    .circuit-pulse,
+    .image-zoom-overlay,
+    .image-zoom-content {
+      animation: none !important;
+      transition: none !important;
     }
   }
 }

@@ -26,7 +26,7 @@ export const legalDocuments: Record<LegalPath, LegalDocument> = {
     title: "Sobre a NativIA",
     lead:
       "A NativIA é uma plataforma de inteligência artificial corporativa desenvolvida para empresas que precisam extrair valor de documentos sensíveis com alto padrão de segurança, governança e privacidade.",
-    updatedAt: "13 de maio de 2026",
+    updatedAt: "28 de maio de 2026",
     sections: [
       {
         title: "Quem somos",
@@ -38,15 +38,17 @@ export const legalDocuments: Record<LegalPath, LegalDocument> = {
       {
         title: "O que entregamos",
         paragraphs: [
-          "A NativIA permite organizar arquivos em coleções, processar documentos em múltiplos formatos e conversar com o conteúdo por meio de chat com IA. A plataforma oferece resumos, respostas contextualizadas, análises e extração estruturada de informações.",
-          "Também disponibilizamos modos especializados para cenários jurídicos, financeiros, OCR, imagens e dados, aumentando precisão e produtividade nas tarefas críticas de cada área.",
+          "A NativIA permite organizar arquivos em coleções compartilháveis, processar documentos em múltiplos formatos e conversar com o conteúdo por meio de chat com IA. A plataforma oferece resumos, respostas contextualizadas, análises e extração estruturada de informações com citação do trecho.",
+          "São cinco modos de análise auto-detectáveis — documental, jurídico, financeiro, dados tabulares e imagens — em que o sistema reconhece o tipo de arquivo na ingestão e ativa o pipeline mais adequado a ele.",
+          "Para holerites/contracheques e extratos bancários, adotamos uma extração determinística: os valores são lidos diretamente da estrutura do documento, sem passar pela geração de texto da IA, eliminando o risco de alucinação numérica em consultas financeiras.",
         ],
       },
       {
         title: "Diferencial de arquitetura",
         paragraphs: [
-          "Nossa arquitetura foi pensada para execução local e on-premise, reduzindo dependência de serviços públicos de nuvem para processamento de dados sensíveis.",
-          "Isso permite que cada empresa preserve soberania sobre sua informação, adote controles internos de segurança e cumpra requisitos de privacidade de forma consistente com sua política corporativa.",
+          "Nossa arquitetura é projetada para execução local/on-premise. Todos os modelos — LLM, embeddings, reranker, transcrição de áudio e análise de imagem — rodam dentro do ambiente do cliente, em GPU própria, sem chamadas para serviços públicos de IA.",
+          "Utilizamos modelos open-source de referência (família Qwen para LLM e VL, BAAI bge-m3 para embeddings, bge-reranker-v2-m3 para re-ranqueamento e Whisper para áudio), o que garante reprodutibilidade, auditabilidade e independência tecnológica.",
+          "Isso permite que cada empresa preserve soberania sobre sua informação, adote controles internos de segurança e cumpra requisitos de privacidade de forma consistente com sua política corporativa — inclusive em cenários em que nem o tráfego de inferência sai do perímetro da rede.",
         ],
       },
       {
@@ -64,7 +66,7 @@ export const legalDocuments: Record<LegalPath, LegalDocument> = {
     title: "Política de Privacidade",
     lead:
       "Esta Política de Privacidade explica como a NativIA trata dados pessoais em seus canais institucionais e na prestação dos serviços de plataforma corporativa, em conformidade com a Lei nº 13.709/2018 (LGPD).",
-    updatedAt: "13 de maio de 2026",
+    updatedAt: "28 de maio de 2026",
     sections: [
       {
         title: "1. Escopo desta política",
@@ -105,14 +107,16 @@ export const legalDocuments: Record<LegalPath, LegalDocument> = {
         title: "6. Segurança da informação",
         paragraphs: [
           "Adotamos controles técnicos e administrativos para proteger dados pessoais contra acessos não autorizados, perda, destruição, alteração ou qualquer forma de tratamento inadequado.",
-          "Esses controles incluem gestão de acessos, trilhas de auditoria, monitoramento, políticas internas e mecanismos de proteção alinhados às boas práticas de segurança corporativa.",
+          "Entre os controles aplicados, destacam-se: criptografia de comunicações em trânsito (TLS), autenticação por SSO via Keycloak (com suporte a SAML/OIDC) integrada a diretórios corporativos LDAP/Active Directory, gestão de permissões por usuário e grupo, trilhas de auditoria com persistência de histórico por conversa, segregação de ambientes, monitoramento de eventos e políticas internas de segurança da informação.",
+          "Quando a plataforma é implantada em modelo on-premise, o tratamento dos documentos do cliente ocorre integralmente dentro do perímetro de rede dele — a NativIA não acessa nem processa esses conteúdos remotamente.",
         ],
       },
       {
         title: "7. Direitos do titular",
         paragraphs: [
           "Nos termos da LGPD, o titular pode solicitar confirmação de tratamento, acesso, correção, anonimização, bloqueio, eliminação, portabilidade, informação sobre compartilhamento e revisão de decisões automatizadas quando aplicável.",
-          "Solicitações podem ser encaminhadas pelos canais oficiais de privacidade. Poderemos solicitar validação de identidade para prevenir fraudes e proteger terceiros.",
+          "Para titulares cadastrados como usuários da plataforma, disponibilizamos um fluxo de exclusão completa de conta diretamente na interface do produto, que remove conta, documentos enviados, índices vetoriais, histórico de conversas e arquivos associados.",
+          "Demais solicitações podem ser encaminhadas pelos canais oficiais de privacidade. Poderemos solicitar validação de identidade para prevenir fraudes e proteger terceiros.",
         ],
       },
       {
@@ -146,7 +150,7 @@ export const legalDocuments: Record<LegalPath, LegalDocument> = {
     title: "Termos de Uso",
     lead:
       "Estes Termos de Uso disciplinam o acesso e a utilização dos canais institucionais e da plataforma NativIA, estabelecendo direitos, deveres e responsabilidades entre as partes.",
-    updatedAt: "13 de maio de 2026",
+    updatedAt: "28 de maio de 2026",
     sections: [
       {
         title: "1. Aceite",
@@ -165,7 +169,7 @@ export const legalDocuments: Record<LegalPath, LegalDocument> = {
       {
         title: "3. Acesso e credenciais",
         paragraphs: [
-          "O acesso à plataforma pode exigir autenticação por credenciais corporativas, SSO ou outros mecanismos definidos em contrato.",
+          "O acesso à plataforma exige autenticação. Suportamos credenciais corporativas via SSO (SAML/OIDC através do Keycloak) e integração com diretórios LDAP/Active Directory, além de outros mecanismos definidos em contrato.",
           "O usuário é responsável por manter a confidencialidade de suas credenciais e por toda atividade realizada em sua conta ou ambiente autorizado.",
         ],
       },
@@ -194,6 +198,7 @@ export const legalDocuments: Record<LegalPath, LegalDocument> = {
         title: "7. Limitação de responsabilidade",
         paragraphs: [
           "A NativIA disponibiliza tecnologia de apoio à análise e decisão, não substituindo validação técnica, jurídica ou de negócio por profissionais responsáveis do cliente.",
+          "O módulo financeiro (holerites e extratos bancários) utiliza extração determinística de valores diretamente da estrutura do documento, com rastreabilidade interna. Os demais módulos — análise documental, jurídica, de dados tabulares e de imagens — combinam recuperação semântica/lexical com modelos generativos, que estão sujeitos a imprecisões ocasionais e podem requerer validação humana antes do uso para fins decisórios.",
           "Na extensão permitida por lei e contrato, não nos responsabilizamos por danos indiretos, lucros cessantes ou perdas decorrentes de uso inadequado, integração de terceiros ou descumprimento de obrigações pelo usuário.",
         ],
       },
@@ -225,7 +230,7 @@ export const legalDocuments: Record<LegalPath, LegalDocument> = {
     title: "Programa LGPD e Proteção de Dados",
     lead:
       "A NativIA adota um programa contínuo de privacidade e proteção de dados para assegurar conformidade com a LGPD, reduzir riscos e fortalecer a confiança no uso corporativo de inteligência artificial.",
-    updatedAt: "13 de maio de 2026",
+    updatedAt: "28 de maio de 2026",
     sections: [
       {
         title: "1. Compromisso institucional",
@@ -250,7 +255,9 @@ export const legalDocuments: Record<LegalPath, LegalDocument> = {
       {
         title: "4. Medidas técnicas e organizacionais",
         paragraphs: [
-          "Adotamos controles de acesso, segregação de ambientes, criptografia conforme cenário, trilhas de auditoria, monitoramento de eventos, gestão de vulnerabilidades e políticas de segurança da informação.",
+          "Adotamos controles de acesso por usuário e grupo, segregação de ambientes, criptografia de comunicações em trânsito (TLS), trilhas de auditoria com persistência por conversa, monitoramento de eventos, gestão de vulnerabilidades e políticas internas de segurança da informação.",
+          "A autenticação utiliza Keycloak com SSO (SAML/OIDC) e integração com diretórios LDAP/Active Directory. Os modelos de IA — LLM, embeddings, reranker, OCR/imagem e transcrição de áudio — rodam localmente na infraestrutura do cliente, sem chamadas para serviços públicos de IA durante a inferência.",
+          "A plataforma oferece um fluxo de exclusão completa de conta diretamente na interface, que remove dados pessoais, documentos enviados, índices vetoriais, histórico de conversas e arquivos do usuário.",
           "Também realizamos treinamentos internos, revisão de perfis de acesso e avaliação de fornecedores com impacto em dados pessoais.",
         ],
       },
@@ -278,9 +285,12 @@ export const legalDocuments: Record<LegalPath, LegalDocument> = {
       {
         title: "8. Canal de privacidade e encarregado",
         paragraphs: [
-          "Dúvidas sobre tratamento de dados, solicitações de titulares e comunicações relacionadas à LGPD podem ser encaminhadas pelos canais de privacidade da NativIA.",
+          "Em atendimento ao art. 41 da LGPD, a NativIA indica seu Encarregado pelo Tratamento de Dados Pessoais (DPO), responsável por intermediar comunicações com titulares e com a Autoridade Nacional de Proteção de Dados.",
+          "Dúvidas sobre tratamento de dados, solicitações de titulares e comunicações relacionadas à LGPD podem ser encaminhadas pelos canais oficiais abaixo.",
         ],
         bulletPoints: [
+          // TODO_DPO: substituir pelo nome do Encarregado/DPO nomeado pela empresa (LGPD art. 41 §1º)
+          "Encarregado (DPO): [a ser preenchido]",
           "E-mail de privacidade: privacidade@nativia.com.br",
           "E-mail de atendimento: contato@nativia.com.br",
         ],
@@ -295,4 +305,3 @@ export const legalNavigation = [
   { href: "/termos-de-uso", label: "Termos de Uso" },
   { href: "/lgpd", label: "LGPD" },
 ] as const;
-

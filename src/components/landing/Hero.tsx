@@ -7,16 +7,33 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-gradient-hero pb-16 pt-12 sm:pb-10 sm:pt-30 lg:pb-16 lg:pt-30"
+      // `pt-24` em mobile garante que o conteúdo (badge + h1) fique abaixo da
+      // navbar fixa. A navbar ocupa ~76px do topo (12px do top-3 + 64px do h-16);
+      // anteriormente `pt-12` (48px) deixava o badge escondido atrás da navbar
+      // em telas pequenas. A partir de sm, `pt-30` já dá folga suficiente.
+      className="relative overflow-hidden bg-gradient-hero pb-16 pt-24 sm:pb-10 sm:pt-30 lg:pb-16 lg:pt-30"
     >
       <div className="absolute inset-0 grid-bg opacity-60 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-12">
-          <div className="reveal-up">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1.5 text-xs text-muted-foreground">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-              IA privada · On-premise · LGPD
+          {/*
+            Em mobile/tablet (<lg) o layout é coluna única — centralizamos
+            o conteúdo (badge, h1, parágrafo, CTAs) para um visual equilibrado.
+            A partir de lg o conteúdo retoma o alinhamento à esquerda, próprio
+            do split horizontal lado a lado com a imagem.
+          */}
+          <div className="reveal-up text-center lg:text-left">
+            {/*
+              Badge futurista:
+              - `.hero-badge` fornece borda gradiente cônica animada (mesma técnica
+                de mask-composite do botão), glow ciano pulsante e backdrop blur.
+              - Estrutura interna mantida: dot pulsante + texto.
+              - O dot piscante reforça a sensação de "sistema ao vivo".
+            */}
+            <div className="hero-badge mb-6 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs text-muted-foreground">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary shadow-[0_0_8px_oklch(0.78_0.16_200/0.8)]" />
+              <span className="font-medium tracking-wide">IA privada · On-premise · LGPD</span>
             </div>
 
             <h1 className="mb-5 text-3xl font-bold leading-[1.08] sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl">
@@ -25,21 +42,41 @@ export function Hero() {
               empresa.
             </h1>
 
-            <p className="mb-7 max-w-xl text-base text-muted-foreground sm:mb-8 sm:text-lg">
+            <p className="mx-auto mb-7 max-w-xl text-base text-muted-foreground sm:mb-8 sm:text-lg lg:mx-0">
               NativIA é uma plataforma de inteligência artificial privada que
               processa documentos e gera insights dentro do seu próprio ambiente.
               Segurança, governança e produtividade sem vazamento de informação.
             </p>
 
-            <div className="mb-1 flex flex-col flex-wrap gap-3 sm:flex-row">
-              <ButtonLink href="#contato" size="lg" className="w-full sm:w-auto">
-                Agendar demonstração
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </ButtonLink>
+            {/*
+              CTAs com intenções diferenciadas:
+              - "Agendar demonstração" → leva ao formulário estruturado (#contato),
+                ideal para leads no topo do funil que querem ver o produto.
+              - "Falar com especialista" → abre o e-mail diretamente, atendendo
+                quem já tem perguntas específicas e prefere conversa direta.
+              Anteriormente ambos apontavam para #contato, criando redundância
+              sem ganho de segmentação.
+            */}
+            {/*
+              Ambos os CTAs usam a variante `gradient-border` — borda cônica
+              animada em ciano (cor primary do projeto) que acelera + preenche
+              o interior com glow radial no hover. Visual unificado e moderno;
+              a diferenciação de intenção segue pelo texto e pelo destino.
+            */}
+            <div className="mb-1 flex flex-col flex-wrap items-center justify-center gap-3 sm:flex-row lg:justify-start">
               <ButtonLink
                 href="#contato"
                 size="lg"
-                variant="outline"
+                variant="gradient-border"
+                className="w-full sm:w-auto"
+              >
+                Agendar demonstração
+                <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
+              </ButtonLink>
+              <ButtonLink
+                href="mailto:contato@nativia.com.br?subject=Quero%20falar%20com%20um%20especialista%20NativIA"
+                size="lg"
+                variant="gradient-border"
                 className="w-full sm:w-auto"
               >
                 Falar com especialista
