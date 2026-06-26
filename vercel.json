@@ -1,8 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-
-  "_comment": "Headers de segurança aplicados em produção. Os comentários ficam neste campo customizado porque vercel.json é JSON estrito (sem // comentários).",
-
   "headers": [
     {
       "source": "/(.*)",
