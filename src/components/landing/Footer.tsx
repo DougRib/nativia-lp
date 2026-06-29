@@ -80,13 +80,18 @@ export function Footer() {
             </li>
             <li className="flex items-center gap-2">
               <Phone className="h-4 w-4" />
-              <a href="tel:+551140000000" className="hover:text-foreground">
-                +55 (11) 4000-0000
+              <a
+                href={`https://wa.me/5551984793631?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20NativIA.`}
+                className="hover:text-foreground"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                +55 (51) 984793631
               </a>
             </li>
             <li className="flex items-center gap-2">
               <MapPin className="h-4 w-4" />
-              São Paulo · Brasil
+              Porto Alegre · Brasil
             </li>
           </ul>
         </div>
